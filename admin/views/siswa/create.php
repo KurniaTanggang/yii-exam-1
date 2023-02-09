@@ -8,7 +8,8 @@ use yii\helpers\Html;
 
 ?>
 <div class="siswa-create">
-    <?= $this->render('_form', [
+  <?= $this->render('_form', [
         'model' => $model,
+        'data' => $data,
     ]) ?>
 </div>

@@ -18,8 +18,8 @@ class SiswaSearch extends Siswa
     public function rules()
     {
         return [
-            [['id', 'id_kelas'], 'integer'],
-            [['nis', 'nama', 'alamat'], 'safe'],
+            [['id', 'id_kelas', 'id_user'], 'integer'],
+            [['nis', 'nama', 'tempat_lahir', 'tanggal_lahir', 'alamat'], 'safe'],
         ];
     }
 
@@ -57,11 +57,14 @@ class SiswaSearch extends Siswa
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'tanggal_lahir' => $this->tanggal_lahir,
             'id_kelas' => $this->id_kelas,
+            'id_user' => $this->id_user,
         ]);
 
         $query->andFilterWhere(['like', 'nis', $this->nis])
             ->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'tempat_lahir', $this->tempat_lahir])
             ->andFilterWhere(['like', 'alamat', $this->alamat]);
 
         return $dataProvider;

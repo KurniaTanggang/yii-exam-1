@@ -13,8 +13,11 @@ use yii\widgets\DetailView;
             'id',
             'nis',
             'nama',
+            'tempat_lahir',
+            'tanggal_lahir',
             'alamat:ntext',
             'id_kelas',
+            'id_user',
         ],
     ]) ?>
     </div>

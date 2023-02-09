@@ -7,8 +7,9 @@ use yii\helpers\Html;
 ?>
 <div class="siswa-update">
 
-    <?= $this->render('_form', [
+  <?= $this->render('_form', [
         'model' => $model,
+        'data' => $data,
     ]) ?>
 
 </div>
