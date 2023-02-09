@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%siswa_rw_kelas}}`.
  */
-class m230207_143147_create_siswa_rw_kelas_table extends Migration
+class m230209_044421_create_siswa_rw_kelas_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,8 @@ class m230207_143147_create_siswa_rw_kelas_table extends Migration
             'id' => $this->primaryKey(),
             'id_siswa' => $this->integer(),
             'id_kelas' => $this->integer(),
-            'tahun_ajaran' => $this->string(25),
-            'nama_kelas' => $this->string(25),
+            'id_tahun_ajaran' => $this->integer(),
+            'nama_kelas' => $this->string(20),
             'id_tingkat' => $this->integer(),
             'id_wali_kelas' => $this->integer(),
         ]);

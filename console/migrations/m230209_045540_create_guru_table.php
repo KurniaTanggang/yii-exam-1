@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%guru}}`.
  */
-class m230207_141026_create_guru_table extends Migration
+class m230209_045540_create_guru_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -15,6 +15,7 @@ class m230207_141026_create_guru_table extends Migration
         $this->createTable('{{%guru}}', [
             'id' => $this->primaryKey(),
             'nama_guru' => $this->string(255),
+            'id_user' => $this->integer(),
         ]);
     }
 
