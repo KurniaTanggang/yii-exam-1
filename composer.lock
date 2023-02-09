@@ -32,7 +32,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -1103,20 +1103,20 @@
         },
         {
             "name": "kartik-v/yii2-mpdf",
-            "version": "v1.0.6",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-mpdf.git",
-                "reference": "7ea3a5f9bcf5bcf6d681bd82cbe843c356d1428c"
+                "reference": "17fda1cb084c58fee6014026d35af5faf73316ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/7ea3a5f9bcf5bcf6d681bd82cbe843c356d1428c",
-                "reference": "7ea3a5f9bcf5bcf6d681bd82cbe843c356d1428c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/17fda1cb084c58fee6014026d35af5faf73316ef",
+                "reference": "17fda1cb084c58fee6014026d35af5faf73316ef",
                 "shasum": ""
             },
             "require": {
-                "mpdf/mpdf": "~8.0"
+                "mpdf/mpdf": "<7.0"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1126,12 +1126,12 @@
             },
             "autoload": {
                 "psr-4": {
-                    "kartik\\mpdf\\": "src"
+                    "kartik\\mpdf\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "BSD 3-Clause"
             ],
             "authors": [
                 {
@@ -1155,13 +1155,7 @@
                 "issues": "https://github.com/kartik-v/yii2-mpdf/issues",
                 "source": "https://github.com/kartik-v/yii2-mpdf/tree/master"
             },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/yii2-mpdf",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2020-04-14T08:55:18+00:00"
+            "time": "2017-01-14T11:51:12+00:00"
         },
         {
             "name": "kartik-v/yii2-popover-x",
@@ -2354,63 +2348,48 @@
         },
         {
             "name": "mpdf/mpdf",
-            "version": "v8.1.4",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpdf/mpdf.git",
-                "reference": "add590e93b7502efafd9839a68cff99f3497b318"
+                "reference": "7f138bf7508eac895ac2c13d2509b056ac7e7e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/add590e93b7502efafd9839a68cff99f3497b318",
-                "reference": "add590e93b7502efafd9839a68cff99f3497b318",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/7f138bf7508eac895ac2c13d2509b056ac7e7e97",
+                "reference": "7f138bf7508eac895ac2c13d2509b056ac7e7e97",
                 "shasum": ""
             },
             "require": {
-                "ext-gd": "*",
                 "ext-mbstring": "*",
-                "myclabs/deep-copy": "^1.7",
-                "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
-                "php": "^5.6 || ^7.0 || ~8.0.0 || ~8.1.0 || ~8.2.0",
-                "php-http/message-factory": "^1.0",
-                "psr/http-message": "^1.0",
-                "psr/log": "^1.0 || ^2.0",
-                "setasign/fpdi": "^2.1"
+                "php": ">=5.4.0",
+                "setasign/fpdi": "1.6.*"
             },
             "require-dev": {
-                "mockery/mockery": "^1.3.0",
-                "mpdf/qrcode": "^1.1.0",
-                "squizlabs/php_codesniffer": "^3.5.0",
-                "tracy/tracy": "~2.5",
-                "yoast/phpunit-polyfills": "^1.0"
+                "phpunit/phpunit": "^4.7"
             },
             "suggest": {
-                "ext-bcmath": "Needed for generation of some types of barcodes",
-                "ext-xml": "Needed mainly for SVG manipulation",
                 "ext-zlib": "Needed for compression of embedded resources, such as fonts"
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Mpdf\\": "src/"
-                }
+                "classmap": [
+                    "mpdf.php",
+                    "classes"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0-only"
+                "GPL-2.0"
             ],
             "authors": [
                 {
-                    "name": "Matěj Humpál",
-                    "role": "Developer, maintainer"
-                },
-                {
                     "name": "Ian Back",
-                    "role": "Developer (retired)"
+                    "role": "Developer"
                 }
             ],
-            "description": "PHP library generating PDF files from UTF-8 encoded HTML",
-            "homepage": "https://mpdf.github.io",
+            "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support",
+            "homepage": "http://mpdf.github.io",
             "keywords": [
                 "pdf",
                 "php",
@@ -2421,72 +2400,7 @@
                 "issues": "https://github.com/mpdf/mpdf/issues",
                 "source": "https://github.com/mpdf/mpdf"
             },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/mpdf",
-                    "type": "custom"
-                }
-            ],
-            "time": "2022-12-15T11:24:39+00:00"
-        },
-        {
-            "name": "myclabs/deep-copy",
-            "version": "1.11.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
-                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0"
-            },
-            "conflict": {
-                "doctrine/collections": "<1.6.8",
-                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
-            },
-            "require-dev": {
-                "doctrine/collections": "^1.6.8",
-                "doctrine/common": "^2.13.3 || ^3.2.2",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/DeepCopy/deep_copy.php"
-                ],
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Create deep copies (clones) of your objects",
-            "keywords": [
-                "clone",
-                "copy",
-                "duplicate",
-                "object",
-                "object graph"
-            ],
-            "support": {
-                "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
-            },
-            "funding": [
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-03-03T13:19:32+00:00"
+            "time": "2016-12-12T10:42:18+00:00"
         },
         {
             "name": "npm-asset/bootstrap",
@@ -2551,60 +2465,6 @@
             "time": "2020-10-15T08:29:30+00:00"
         },
         {
-            "name": "php-http/message-factory",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/message-factory.git",
-                "reference": "a478cb11f66a6ac48d8954216cfed9aa06a501a1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message-factory/zipball/a478cb11f66a6ac48d8954216cfed9aa06a501a1",
-                "reference": "a478cb11f66a6ac48d8954216cfed9aa06a501a1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "psr/http-message": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "Factory interfaces for PSR-7 HTTP Message",
-            "homepage": "http://php-http.org",
-            "keywords": [
-                "factory",
-                "http",
-                "message",
-                "stream",
-                "uri"
-            ],
-            "support": {
-                "issues": "https://github.com/php-http/message-factory/issues",
-                "source": "https://github.com/php-http/message-factory/tree/master"
-            },
-            "time": "2015-12-19T14:08:53+00:00"
-        },
-        {
             "name": "phpspec/php-diff",
             "version": "v1.1.3",
             "source": {
@@ -2644,109 +2504,6 @@
                 "source": "https://github.com/phpspec/php-diff/tree/v1.1.3"
             },
             "time": "2020-09-18T13:47:07+00:00"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/http-message/tree/master"
-            },
-            "time": "2016-08-06T14:39:51+00:00"
-        },
-        {
-            "name": "psr/log",
-            "version": "1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for logging libraries",
-            "homepage": "https://github.com/php-fig/log",
-            "keywords": [
-                "log",
-                "psr",
-                "psr-3"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
-            },
-            "time": "2021-05-03T11:20:27+00:00"
         },
         {
             "name": "select2/select2",
@@ -2792,40 +2549,32 @@
         },
         {
             "name": "setasign/fpdi",
-            "version": "v2.3.6",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDI.git",
-                "reference": "6231e315f73e4f62d72b73f3d6d78ff0eed93c31"
+                "reference": "a6ad58897a6d97cc2d2cd2adaeda343b25a368ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/6231e315f73e4f62d72b73f3d6d78ff0eed93c31",
-                "reference": "6231e315f73e4f62d72b73f3d6d78ff0eed93c31",
+                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/a6ad58897a6d97cc2d2cd2adaeda343b25a368ea",
+                "reference": "a6ad58897a6d97cc2d2cd2adaeda343b25a368ea",
                 "shasum": ""
             },
-            "require": {
-                "ext-zlib": "*",
-                "php": "^5.6 || ^7.0 || ^8.0"
-            },
-            "conflict": {
-                "setasign/tfpdf": "<1.31"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~5.7",
-                "setasign/fpdf": "~1.8",
-                "setasign/tfpdf": "1.31",
-                "squizlabs/php_codesniffer": "^3.5",
-                "tecnickcom/tcpdf": "~6.2"
-            },
             "suggest": {
-                "setasign/fpdf": "FPDI will extend this class but as it is also possible to use TCPDF or tFPDF as an alternative. There's no fixed dependency configured."
+                "setasign/fpdf": "FPDI will extend this class but as it is also possible to use \"tecnickcom/tcpdf\" as an alternative there's no fixed dependency configured.",
+                "setasign/fpdi-fpdf": "Use this package to automatically evaluate dependencies to FPDF.",
+                "setasign/fpdi-tcpdf": "Use this package to automatically evaluate dependencies to TCPDF."
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "setasign\\Fpdi\\": "src/"
-                }
+                "classmap": [
+                    "filters/",
+                    "fpdi.php",
+                    "fpdf_tpl.php",
+                    "fpdi_pdf_parser.php",
+                    "pdf_context.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2835,11 +2584,6 @@
                 {
                     "name": "Jan Slabon",
                     "email": "jan.slabon@setasign.com",
-                    "homepage": "https://www.setasign.com"
-                },
-                {
-                    "name": "Maximilian Kresse",
-                    "email": "maximilian.kresse@setasign.com",
                     "homepage": "https://www.setasign.com"
                 }
             ],
@@ -2852,15 +2596,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Setasign/FPDI/issues",
-                "source": "https://github.com/Setasign/FPDI/tree/v2.3.6"
+                "source": "https://github.com/Setasign/FPDI/tree/master"
             },
-            "funding": [
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/setasign/fpdi",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-02-11T11:37:01+00:00"
+            "time": "2017-05-11T14:25:49+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4794,6 +4532,65 @@
             "time": "2022-10-26T14:07:24+00:00"
         },
         {
+            "name": "myclabs/deep-copy",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myclabs/DeepCopy.git",
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "reference": "14daed4296fae74d9e3201d2c4925d1acb7aa614",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "doctrine/collections": "<1.6.8",
+                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
+            },
+            "require-dev": {
+                "doctrine/collections": "^1.6.8",
+                "doctrine/common": "^2.13.3 || ^3.2.2",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Create deep copies (clones) of your objects",
+            "keywords": [
+                "clone",
+                "copy",
+                "duplicate",
+                "object",
+                "object graph"
+            ],
+            "support": {
+                "issues": "https://github.com/myclabs/DeepCopy/issues",
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.0"
+            },
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/myclabs/deep-copy",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-03-03T13:19:32+00:00"
+        },
+        {
             "name": "phar-io/manifest",
             "version": "2.0.3",
             "source": {
@@ -5455,6 +5252,59 @@
                 "source": "https://github.com/php-fig/http-factory/tree/master"
             },
             "time": "2019-04-30T12:38:16+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-message/tree/master"
+            },
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -7606,5 +7456,5 @@
         "php": ">=5.6.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
