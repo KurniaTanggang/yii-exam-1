@@ -6,16 +6,28 @@ use yii\widgets\DetailView;
 /* @var $model common\models\MataPelajaran */
 ?>
 <div class="mata-pelajaran-view">
-    <div class="table-responsive">
+  <div class="table-responsive">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'mata_pelajaran',
-            'id_tingkat_kelas',
-            'id_jurusan',
+            [
+                'label' => 'Tingkat Kelas',
+                'attribute' => 'id_tingkat_kelas',
+                'value' => function ($model) {
+                    return $model->refTingkatKelas->tingkat_kelas;
+                }
+            ],
+            [
+                'label' => 'Jurusan',
+                'attribute' => 'id_jurusan',
+                'value' => function ($model) {
+                    return $model->refJurusan->jurusan;
+                }
+            ],
         ],
     ]) ?>
-    </div>
+  </div>
 
 </div>

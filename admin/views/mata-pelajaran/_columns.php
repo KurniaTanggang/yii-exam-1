@@ -19,12 +19,20 @@ return [
         'attribute'=>'mata_pelajaran',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_tingkat_kelas',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Tingkat Kelas',
+        'attribute' => 'id_tingkat_kelas',
+        'value' => function ($model) {
+            return $model->refTingkatKelas->tingkat_kelas;
+        }
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_jurusan',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Jurusan',
+        'attribute' => 'id_jurusan',
+        'value' => function ($model) {
+            return $model->refJurusan->jurusan;
+        }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

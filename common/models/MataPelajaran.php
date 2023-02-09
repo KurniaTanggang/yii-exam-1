@@ -46,4 +46,14 @@ class MataPelajaran extends \yii\db\ActiveRecord
             'id_jurusan' => 'Id Jurusan',
         ];
     }
+
+    public function getRefTingkatKelas()
+    {
+        return $this->hasOne(RefTingkatKelas::className(), ['id' => 'id_tingkat_kelas']);
+    }
+
+    public function getRefJurusan()
+    {
+        return $this->hasOne(RefJurusan::className(), ['id' => 'id_jurusan']);
+    }
 }

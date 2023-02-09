@@ -5,6 +5,9 @@ namespace admin\controllers;
 use Yii;
 use common\models\MataPelajaran;
 use admin\models\MataPelajaranSearch;
+use common\models\RefTingkatKelas;
+use common\models\RefJurusan;
+use common\models\RefJurusan as ModelsRefJurusan;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -84,6 +87,8 @@ class MataPelajaranController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
+        $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
+        $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
         $model = new MataPelajaran();  
 
         if($request->isAjax){
@@ -96,6 +101,8 @@ class MataPelajaranController extends Controller
                     'title'=> "Tambah MataPelajaran",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -146,6 +153,8 @@ class MataPelajaranController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
+        $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
+        $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
         $model = $this->findModel($id);       
 
         if($request->isAjax){
@@ -158,6 +167,8 @@ class MataPelajaranController extends Controller
                     'title'=> "Ubah MataPelajaran",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
