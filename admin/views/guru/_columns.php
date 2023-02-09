@@ -18,10 +18,10 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nama_guru',
     ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_user',
-    ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'id_user',
+    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
