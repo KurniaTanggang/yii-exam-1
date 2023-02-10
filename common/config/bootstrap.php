@@ -5,3 +5,4 @@ Yii::setAlias('@backend', dirname(dirname(__DIR__)) . '/backend');
 Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@admin', dirname(dirname(__DIR__)) . '/admin');
 Yii::setAlias('@siswa', dirname(dirname(__DIR__)) . '/siswa');
+Yii::setAlias('@guru', dirname(dirname(__DIR__)) . '/guru');

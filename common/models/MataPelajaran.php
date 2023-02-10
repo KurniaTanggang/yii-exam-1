@@ -56,4 +56,11 @@ class MataPelajaran extends \yii\db\ActiveRecord
     {
         return $this->hasOne(RefJurusan::className(), ['id' => 'id_jurusan']);
     }
+
+    public function getNamaGuru()
+    {
+        return $this->hasOne(Guru::className(), ['id' => 'id_guru'])
+                ->viaTable('GuruMataPelajaran', ['id' => 'id_mata_pelajaran']);
+    }
+
 }

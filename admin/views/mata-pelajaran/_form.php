@@ -31,6 +31,8 @@ use kartik\select2\Select2;
         ],
     ])->label('Jurusan'); ?>
 
+
+
   <?php if (!Yii::$app->request->isAjax){ ?>
   <div class="form-group">
     <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

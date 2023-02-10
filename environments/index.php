@@ -42,6 +42,8 @@ return [
             'admin/web/assets',
             'siswa/runtime',
             'siswa/web/assets',
+            'guru/runtime',
+            'guru/web/assets',
         ],
         'setExecutable' => [
             'yii',
@@ -53,6 +55,7 @@ return [
             'frontend/config/main-local.php',
             'admin/config/main-local.php',
             'siswa/config/main-local.php',
+            'guru/config/main-local.php',
         ],
     ],
     'Production' => [
@@ -67,6 +70,8 @@ return [
             'admin/web/assets',
             'siswa/runtime',
             'siswa/web/assets',
+            'guru/runtime',
+            'guru/web/assets',
         ],
         'setExecutable' => [
             'yii',
@@ -76,6 +81,7 @@ return [
             'frontend/config/main-local.php',
             'admin/config/main-local.php',
             'siswa/config/main-local.php',
+            'guru/config/main-local.php',
         ],
     ],
 ];

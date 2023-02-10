@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 return [
     //[
@@ -29,6 +30,14 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'header' => 'Jurusan',
+        'attribute' => 'id_jurusan',
+        'value' => function ($model) {
+            return $model->refJurusan->jurusan;
+        }
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Guru Pengampu',
         'attribute' => 'id_jurusan',
         'value' => function ($model) {
             return $model->refJurusan->jurusan;

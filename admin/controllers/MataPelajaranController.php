@@ -8,6 +8,7 @@ use admin\models\MataPelajaranSearch;
 use common\models\RefTingkatKelas;
 use common\models\RefJurusan;
 use common\models\RefJurusan as ModelsRefJurusan;
+use common\models\GuruMataPelajaran;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -89,6 +90,7 @@ class MataPelajaranController extends Controller
         $request = Yii::$app->request;
         $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
         $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
+        $guru = ArrayHelper::map(GuruMataPelajaran::find()->all(), 'id', 'nama_guru');
         $model = new MataPelajaran();  
 
         if($request->isAjax){
@@ -103,6 +105,7 @@ class MataPelajaranController extends Controller
                         'model' => $model,
                         'tingkat_kelas' => $tingkat_kelas,
                         'jurusan' => $jurusan,
+                        'guru' => $guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
