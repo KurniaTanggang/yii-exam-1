@@ -31,7 +31,13 @@ use kartik\select2\Select2;
         ],
     ])->label('Jurusan'); ?>
 
-
+  <?= $form->field($model_guru_mata_pelajaran, 'id_guru')->widget(Select2::classname(), [
+        'data' => $guru,
+        'options' => ['placeholder' => '-Pilih Guru-'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])->label('Guru'); ?>
 
   <?php if (!Yii::$app->request->isAjax){ ?>
   <div class="form-group">

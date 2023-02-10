@@ -9,6 +9,7 @@ use common\models\RefTingkatKelas;
 use common\models\RefJurusan;
 use common\models\RefJurusan as ModelsRefJurusan;
 use common\models\GuruMataPelajaran;
+use common\models\Guru;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -62,12 +63,14 @@ class MataPelajaranController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $nama_guru = GuruMataPelajaran::find()->where(['id_mata_pelajaran' => $id])->all();
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "MataPelajaran ",
+                    'title'=> "Mata Pelajaran ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
+                        'nama_guru' => $nama_guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -90,9 +93,11 @@ class MataPelajaranController extends Controller
         $request = Yii::$app->request;
         $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
         $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
-        $guru = ArrayHelper::map(GuruMataPelajaran::find()->all(), 'id', 'nama_guru');
+        $guru = ArrayHelper::map(Guru::find()->all(), 'id', 'nama_guru');
+        
         $model = new MataPelajaran();  
-
+        $model_guru_mata_pelajaran = new GuruMataPelajaran();  
+        
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -106,12 +111,15 @@ class MataPelajaranController extends Controller
                         'tingkat_kelas' => $tingkat_kelas,
                         'jurusan' => $jurusan,
                         'guru' => $guru,
+                        'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post()) && $model_guru_mata_pelajaran->load($request->post()) && $model->save()){
+                $model_guru_mata_pelajaran->id_mata_pelajaran = $model->id;
+                $model_guru_mata_pelajaran->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah MataPelajaran",

@@ -42,6 +42,10 @@ class GuruMataPelajaran extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getNamaGuru()
+    {
+        return $this->hasOne(Guru::className(), ['id' => 'id_guru']);
+    }
     
     
 }

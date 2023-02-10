@@ -13,5 +13,6 @@ use yii\helpers\Html;
         'tingkat_kelas' => $tingkat_kelas,
         'jurusan' => $jurusan,
         'guru' => $guru,
+        'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
     ]) ?>
 </div>
