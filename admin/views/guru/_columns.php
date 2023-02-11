@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 return [
     //[
@@ -22,6 +23,22 @@ return [
     //     'class'=>'\kartik\grid\DataColumn',
     //     'attribute'=>'id_user',
     // ],
+    [
+        'class' => 'kartik\grid\ActionColumn',
+        'header' => 'Aksi',
+        'template' => '{btn_aksi}',
+        'buttons' => [
+            "btn_aksi" => function ($url, $model, $key) {
+                return Html::a('Tambah Akun', ['create-akun', 'id' => $model->id], [
+                    'class' => 'btn btn-success btn-block',
+                    'role' => 'modal-remote',
+                    'title' => 'Lihat',
+                    'data-toggle' => 'tooltip'
+                ]);
+            },
+
+        ]
+    ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

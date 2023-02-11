@@ -5,6 +5,7 @@ namespace admin\controllers;
 use Yii;
 use common\models\Guru;
 use admin\models\GuruSearch;
+use common\models\CreateNewAkun;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -130,6 +131,69 @@ class GuruController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                ]);
+            }
+        }
+       
+    }
+
+    public function actionCreateAkun($id)
+    {
+        $request = Yii::$app->request;
+        $model_akun = new CreateNewAkun(); 
+        $model = $this->findModel($id); 
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Tambah Akun",
+                    'content'=>$this->renderAjax('form-akun', [
+                        'model_akun' => $model_akun,
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($model_akun->load($request->post()) && $model_akun->signup()){
+                $lastId = Yii::$app->db->getLastInsertID();
+                $model->id_user = $lastId;
+                $model->save();
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Tambah Akun",
+                    'content'=>'<span class="text-success">Create Siswa berhasil</span>',
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Tambah Lagi',['form-akun'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Tambah Siswa",
+                    'content'=>$this->renderAjax('form-akun', [
+                        'model_akun' => $model_akun,
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model_akun->load($request->post()) && $model_akun->signup()) {
+                $model->id_user = $model->id;
+                return $this->redirect(['view', 'id' => $model_akun->id]);
+            } else {
+                return $this->render('form-akun', [
+                    'model' => $model,
+                    'model_akun' => $model_akun,
                 ]);
             }
         }
