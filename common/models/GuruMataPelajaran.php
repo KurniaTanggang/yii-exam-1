@@ -20,6 +20,11 @@ class GuruMataPelajaran extends \yii\db\ActiveRecord
         return 'guru_mata_pelajaran';
     }
 
+    public static function primaryKey()
+{
+    return ['id_mata_pelajaran'];
+}
+
     /**
      * {@inheritdoc}
      */

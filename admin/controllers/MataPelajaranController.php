@@ -175,7 +175,7 @@ class MataPelajaranController extends Controller
         
         $model = $this->findModel($id);
                
-        $model_guru_mata_pelajaran = new GuruMataPelajaran();  
+        $model_guru_mata_pelajaran = GuruMataPelajaran::find()->where(['id_mata_pelajaran' => $id])->one();  
 
         if($request->isAjax){
             /*
@@ -195,12 +195,20 @@ class MataPelajaranController extends Controller
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post()) && $model->save() ){
+                $getDataGuru = $request->post();
+                $idGuru = $getDataGuru['GuruMataPelajaran']['id_guru'];
+                $model_guru_mata_pelajaran->id_guru =  $idGuru ;
+                $model_guru_mata_pelajaran->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Mata Pelajaran ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
+                        'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -210,7 +218,10 @@ class MataPelajaranController extends Controller
                     'title'=> "Ubah Mata Pelajaran ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
-                        'model_guru_mata_pelajaran' => $model->$model_guru_mata_pelajaran,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
+                        'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
