@@ -157,14 +157,15 @@ class SiswaController extends Controller
                     'content'=>$this->renderAjax('form-akun', [
                         'model_akun' => $model_akun,
                         'model' => $model,
-
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model_akun->load($request->post()) && $model_akun->signup()){
-                $model->id_user = '7';
+                $lastId = Yii::$app->db->getLastInsertID();
+                $model->id_user = $lastId;
+                $model->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Akun",
