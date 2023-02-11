@@ -38,7 +38,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'header' => 'Guru Pengampu',
-        'attribute' => 'id_mata_pelajaran',
+        'attribute' => 'id',
         'value' => function ($model) {
             return $model->guruMataPelajaran->namaGuru->nama_guru;
         }

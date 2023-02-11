@@ -63,14 +63,12 @@ class MataPelajaranController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
-        $nama_guru = GuruMataPelajaran::find()->where(['id_mata_pelajaran' => $id])->all();
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
                     'title'=> "Mata Pelajaran ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
-                        'nama_guru' => $nama_guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -143,11 +141,17 @@ class MataPelajaranController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
+            if ($model->load($request->post()) && $model_guru_mata_pelajaran->load($request->post()) && $model->save()){
+                $model_guru_mata_pelajaran->id_mata_pelajaran = $model->id;
+                $model_guru_mata_pelajaran->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'tingkat_kelas' => $tingkat_kelas,
+                    'jurusan' => $jurusan,
+                    'guru' => $guru,
+                    'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                 ]);
             }
         }
@@ -166,7 +170,12 @@ class MataPelajaranController extends Controller
         $request = Yii::$app->request;
         $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
         $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
-        $model = $this->findModel($id);       
+        $guru = ArrayHelper::map(Guru::find()->all(), 'id', 'nama_guru');
+        
+        
+        $model = $this->findModel($id);
+               
+        $model_guru_mata_pelajaran = new GuruMataPelajaran();  
 
         if($request->isAjax){
             /*
@@ -180,6 +189,8 @@ class MataPelajaranController extends Controller
                         'model' => $model,
                         'tingkat_kelas' => $tingkat_kelas,
                         'jurusan' => $jurusan,
+                        'guru' => $guru,
+                        'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -187,7 +198,7 @@ class MataPelajaranController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "MataPelajaran ",
+                    'title'=> "Mata Pelajaran ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -196,9 +207,10 @@ class MataPelajaranController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Ubah MataPelajaran ",
+                    'title'=> "Ubah Mata Pelajaran ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'model_guru_mata_pelajaran' => $model->$model_guru_mata_pelajaran,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -208,11 +220,15 @@ class MataPelajaranController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
+            if ($model->load($request->post()) && $model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'tingkat_kelas' => $tingkat_kelas,
+                    'jurusan' => $jurusan,
+                    'guru' => $guru,
+                    'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                 ]);
             }
         }
