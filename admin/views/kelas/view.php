@@ -6,18 +6,42 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Kelas */
 ?>
 <div class="kelas-view">
-    <div class="table-responsive">
+  <div class="table-responsive">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'id_tahun_ajaran',
+            [
+                'label' => 'Tahun Ajaran',
+                'attribute' => 'id_tahun_ajaran',
+                'value' => function ($model) {
+                    return $model->refTahunAjaran->tahun_ajaran;
+                }
+            ],
             'nama_kelas',
-            'id_tingkat',
-            'id_wali_kelas',
-            'id_jurusan',
+            [
+                'label' => 'Tingkat Kelas',
+                'attribute' => 'id_tingkat',
+                'value' => function ($model) {
+                    return $model->refTingkatKelas->tingkat_kelas;
+                }
+            ],
+            [
+                'label' => 'Wali Kelas',
+                'attribute' => 'id_wali_kelas',
+                'value' => function ($model) {
+                    return $model->namaGuru->nama_guru;
+                }
+            ],
+            [
+                'label' => 'Jurusan',
+                'attribute' => 'id_jurusan',
+                'value' => function ($model) {
+                    return $model->refJurusan->jurusan;
+                }
+            ],
         ],
     ]) ?>
-    </div>
+  </div>
 
 </div>

@@ -39,7 +39,7 @@ CrudAsset::register($this);
                             'toolbar'=> [
                                 ['content'=>
                                 Html::a('Tambah Tahun Ajaran', ['add-tahun-ajaran'],
-                                ['role'=>'modal-remote','title'=> 'Create new Kelas','class'=>'btn btn-default']),
+                                ['role'=>'modal-remote','title'=> 'Add Tahun Ajaran','class'=>'btn btn-default']),
                                     // .'{export}'
                                 ],
                             ],          

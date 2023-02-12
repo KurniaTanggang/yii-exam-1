@@ -16,7 +16,7 @@ return [
     // ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Tingkat Kelas',
+        'header' => 'Tahun Ajaran',
         'attribute' => 'id_tahun_ajaran',
         'value' => function ($model) {
             return $model->refTahunAjaran->tahun_ajaran;

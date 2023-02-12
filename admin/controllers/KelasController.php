@@ -62,12 +62,21 @@ class KelasController extends Controller
     public function actionView($id)
     {   
         $request = Yii::$app->request;
+        $tahun_ajaran = ArrayHelper::map(RefTahunAjaran::find()->all(), 'id', 'tahun_ajaran');
+        $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
+        $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
+        $guru = ArrayHelper::map(Guru::find()->all(), 'id', 'nama_guru');
+
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
                     'title'=> "Kelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
+                        'tahun_ajaran' => $tahun_ajaran,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -75,6 +84,10 @@ class KelasController extends Controller
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
+                'tahun_ajaran' => $tahun_ajaran,
+                'tingkat_kelas' => $tingkat_kelas,
+                'jurusan' => $jurusan,
+                'guru' => $guru,
             ]);
         }
     }
@@ -105,9 +118,9 @@ class KelasController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Tahun Ajaran",
-                    'content'=>'<span class="text-success">Create Kelas berhasil</span>',
+                    'content'=>'<span class="text-success">Tambah Tahun Ajaran berhasil</span>',
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Tambah Lagi',['add-tahun-ajaran'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
@@ -225,6 +238,12 @@ class KelasController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
+
+        $tahun_ajaran = ArrayHelper::map(RefTahunAjaran::find()->all(), 'id', 'tahun_ajaran');
+        $tingkat_kelas = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
+        $jurusan = ArrayHelper::map(RefJurusan::find()->all(), 'id', 'jurusan');
+        $guru = ArrayHelper::map(Guru::find()->all(), 'id', 'nama_guru');
+
         $model = $this->findModel($id);       
 
         if($request->isAjax){
@@ -237,6 +256,11 @@ class KelasController extends Controller
                     'title'=> "Ubah Kelas",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'model' => $model,
+                        'tahun_ajaran' => $tahun_ajaran,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -247,6 +271,11 @@ class KelasController extends Controller
                     'title'=> "Kelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
+                        'model' => $model,
+                        'tahun_ajaran' => $tahun_ajaran,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -256,6 +285,11 @@ class KelasController extends Controller
                     'title'=> "Ubah Kelas ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'model' => $model,
+                        'tahun_ajaran' => $tahun_ajaran,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -270,6 +304,11 @@ class KelasController extends Controller
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'model' => $model,
+                    'tahun_ajaran' => $tahun_ajaran,
+                    'tingkat_kelas' => $tingkat_kelas,
+                    'jurusan' => $jurusan,
+                    'guru' => $guru,
                 ]);
             }
         }

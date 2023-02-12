@@ -37,7 +37,7 @@ use kartik\select2\Select2;
         'pluginOptions' => [
             'allowClear' => true
         ],
-    ])->label('Wali Guru'); ?>
+    ])->label('Wali Kelas'); ?>
 
   <?= $form->field($model, 'id_jurusan')->widget(Select2::classname(), [
         'data' => $jurusan,
