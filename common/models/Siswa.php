@@ -62,4 +62,14 @@ class Siswa extends \yii\db\ActiveRecord
     {
         return $this->hasOne(RefTingkatKelas::className(), ['id' => 'id_kelas']);
     }
+    
+    public function getKelas()
+    {
+        return $this->hasOne(Kelas::className(), ['id' => 'id_kelas']);
+    }
+
+    public function getRiwayatSiswa()
+    {
+        return $this->hasOne(SiswaRwKelas::className(), ['id_siswa' => 'id']);
+    }
 }

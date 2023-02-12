@@ -7,6 +7,10 @@ use common\models\Siswa;
 use admin\models\SiswaSearch;
 use common\models\RefTingkatKelas;
 use common\models\CreateNewAkun;
+use common\models\Kelas;
+use common\models\RefJurusan;
+use common\models\RefTahunAjaran;
+use common\models\SiswaRwKelas;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -86,8 +90,11 @@ class SiswaController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $data = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
-        $model = new Siswa();  
+
+        $data = ArrayHelper::map(Kelas::find()->all(), 'id', 'nama_kelas');
+
+        $model = new Siswa();
+        $model_rw_siswa = new SiswaRwKelas();  
 
         if($request->isAjax){
             /*
@@ -100,12 +107,21 @@ class SiswaController extends Controller
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                         'data' => $data,
+                        'model_rw_siswa' => $model_rw_siswa,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                $kelas =  Kelas::find()->where(['id' => $model->id_kelas])->one();
+                $model_rw_siswa->id_siswa = $model->id;
+                $model_rw_siswa->id_kelas = $model->id_kelas;
+                $model_rw_siswa->id_tahun_ajaran = $kelas->id_tahun_ajaran;
+                $model_rw_siswa->nama_kelas = $kelas->nama_kelas;
+                $model_rw_siswa->id_tingkat = $kelas->id_tingkat;
+                $model_rw_siswa->id_wali_kelas = $kelas->id_wali_kelas;
+                $model_rw_siswa->save();
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Siswa",
@@ -119,6 +135,8 @@ class SiswaController extends Controller
                     'title'=> "Tambah Siswa",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'data' => $data,
+                        'model_rw_siswa' => $model_rw_siswa,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -129,11 +147,22 @@ class SiswaController extends Controller
             /*
             *   Process for non-ajax request
             */
+            
             if ($model->load($request->post()) && $model->save()) {
+                $kelas =  Kelas::find()->where(['id' => $model->id_kelas])->one();
+                $model_rw_siswa->id_siswa = $model->id;
+                $model_rw_siswa->id_kelas = $model->id_kelas;
+                $model_rw_siswa->id_tahun_ajaran = $kelas->id_tahun_ajaran;
+                $model_rw_siswa->nama_kelas = $kelas->nama_kelas;
+                $model_rw_siswa->id_tingkat = $kelas->id_tingkat;
+                $model_rw_siswa->id_wali_kelas = $kelas->id_wali_kelas;
+                $model_rw_siswa->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'data' => $data,
+                    'model_rw_siswa' => $model_rw_siswa,
                 ]);
             }
         }
@@ -169,7 +198,7 @@ class SiswaController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Akun",
-                    'content'=>'<span class="text-success">Create Siswa berhasil</span>',
+                    'content'=>'<span class="text-success">Create Akun Siswa berhasil</span>',
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Tambah Lagi',['form-akun'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
