@@ -50,4 +50,24 @@ class Kelas extends \yii\db\ActiveRecord
             'id_jurusan' => 'Id Jurusan',
         ];
     }
+
+    public function getRefTingkatKelas()
+    {
+        return $this->hasOne(RefTingkatKelas::className(), ['id' => 'id_tingkat']);
+    }
+
+    public function getRefJurusan()
+    {
+        return $this->hasOne(RefJurusan::className(), ['id' => 'id_jurusan']);
+    }
+
+    public function getRefTahunAjaran()
+    {
+        return $this->hasOne(RefTahunAjaran::className(), ['id' => 'id_tahun_ajaran']);
+    }
+
+    public function getNamaGuru()
+    {
+        return $this->hasOne(Guru::className(), ['id' => 'id_wali_kelas']);
+    }
 }
