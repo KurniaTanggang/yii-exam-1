@@ -17,18 +17,18 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+  <meta charset="<?= Yii::$app->charset ?>">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <?php $this->registerCsrfMetaTags() ?>
+  <title><?= Html::encode($this->title) ?></title>
+  <?php $this->head() ?>
 </head>
 
 <body class="d-flex flex-column h-100">
-    <?php $this->beginBody() ?>
+  <?php $this->beginBody() ?>
 
-    <header>
-        <?php
+  <header>
+    <?php
         NavBar::begin([
             'brandLabel' => Yii::$app->name,
             'brandUrl' => Yii::$app->homeUrl,
@@ -37,11 +37,12 @@ AppAsset::register($this);
             ],
         ]);
         $menuItems = [
-            ['label' => 'Home', 'url' => ['/Dashboard/index']],
+            ['label' => 'Dashboard', 'url' => ['/site/index']],
 
-            (Yii::$app->user->can('Siswa')) ? ['label' => 'Biodata', 'url' => ['/biodata/index']] : '',
+            ['label' => 'Biodata', 'url' => ['/biodata/index']],
 
-            ['label' => 'Riwayat Kelas', 'url' => ['/Biodata/index']],
+            (Yii::$app->user->can('Siswa')) ? ['label' => 'Riwayat Kelas', 'url' => ['/riwayat-kelas/index']] : '',
+            (Yii::$app->user->can('Siswa')) ? ['label' => 'Wali Murid', 'url' => ['/wali-murid/index']] : '',
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -61,26 +62,26 @@ AppAsset::register($this);
         ]);
         NavBar::end();
         ?>
-    </header>
+  </header>
 
-    <main role="main" class="flex-shrink-0">
-        <div class="container">
-            <?= Breadcrumbs::widget([
+  <main role="main" class="flex-shrink-0">
+    <div class="container">
+      <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?= Alert::widget() ?>
-            <?= $content ?>
-        </div>
-    </main>
+      <?= Alert::widget() ?>
+      <?= $content ?>
+    </div>
+  </main>
 
-    <footer class="footer mt-auto py-3 text-muted">
-        <div class="container">
-            <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-            <p class="float-right"><?= Yii::powered() ?></p>
-        </div>
-    </footer>
+  <footer class="footer mt-auto py-3 text-muted">
+    <div class="container">
+      <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+      <p class="float-right"><?= Yii::powered() ?></p>
+    </div>
+  </footer>
 
-    <?php $this->endBody() ?>
+  <?php $this->endBody() ?>
 </body>
 
 </html>

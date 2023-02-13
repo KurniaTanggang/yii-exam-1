@@ -242,7 +242,7 @@ class SiswaController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $data = ArrayHelper::map(RefTingkatKelas::find()->all(), 'id', 'tingkat_kelas');
+        $data = ArrayHelper::map(Kelas::find()->all(), 'id', 'nama_kelas');
         $model = $this->findModel($id);       
 
         if($request->isAjax){
@@ -266,6 +266,7 @@ class SiswaController extends Controller
                     'title'=> "Siswa ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
+                        'data' => $data,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -275,6 +276,7 @@ class SiswaController extends Controller
                     'title'=> "Ubah Siswa ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'data' => $data,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -289,6 +291,7 @@ class SiswaController extends Controller
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'data' => $data,
                 ]);
             }
         }

@@ -5,12 +5,12 @@ namespace siswa\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Siswa;
+use common\models\SiswaRwKelas;
 
 /**
- * BiodataSearch represents the model behind the search form about `common\models\Siswa`.
+ * SiswaRwKelasSearch represents the model behind the search form about `common\models\SiswaRwKelas`.
  */
-class BiodataSearch extends Siswa
+class SiswaRwKelasSearch extends SiswaRwKelas
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class BiodataSearch extends Siswa
     public function rules()
     {
         return [
-            [['id', 'id_kelas', 'id_user'], 'integer'],
-            [['nis', 'nama', 'tempat_lahir', 'tanggal_lahir', 'alamat'], 'safe'],
+            [['id', 'id_siswa', 'id_kelas', 'id_tahun_ajaran', 'id_tingkat', 'id_wali_kelas'], 'integer'],
+            [['nama_kelas'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class BiodataSearch extends Siswa
      */
     public function search($params)
     {
-        $query = Siswa::find()->where(['id_user' => Yii::$app->user->id]);
+        $query = SiswaRwKelas::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,15 +57,14 @@ class BiodataSearch extends Siswa
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'tanggal_lahir' => $this->tanggal_lahir,
+            'id_siswa' => $this->id_siswa,
             'id_kelas' => $this->id_kelas,
-            'id_user' => $this->id_user,
+            'id_tahun_ajaran' => $this->id_tahun_ajaran,
+            'id_tingkat' => $this->id_tingkat,
+            'id_wali_kelas' => $this->id_wali_kelas,
         ]);
 
-        $query->andFilterWhere(['like', 'nis', $this->nis])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'tempat_lahir', $this->tempat_lahir])
-            ->andFilterWhere(['like', 'alamat', $this->alamat]);
+        $query->andFilterWhere(['like', 'nama_kelas', $this->nama_kelas]);
 
         return $dataProvider;
     }
