@@ -41,8 +41,8 @@ AppAsset::register($this);
 
             ['label' => 'Biodata', 'url' => ['/biodata/index']],
 
-            (Yii::$app->user->can('Siswa')) ? ['label' => 'Riwayat Kelas', 'url' => ['/riwayat-kelas/index']] : '',
-            (Yii::$app->user->can('Siswa')) ? ['label' => 'Wali Murid', 'url' => ['/wali-murid/index']] : '',
+            (Yii::$app->user->can('Siswa')) ? ['label' => 'Riwayat Kelas', 'url' => ['/siswa-rw-kelas/index']] : '',
+            (Yii::$app->user->can('Siswa')) ? ['label' => 'Wali Murid', 'url' => ['/wali/index']] : '',
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

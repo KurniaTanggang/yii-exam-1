@@ -52,4 +52,9 @@ class SiswaRwKelas extends \yii\db\ActiveRecord
             'id_wali_kelas' => 'Id Wali Kelas',
         ];
     }
+
+    public function getSiswa()
+    {
+        return $this->hasOne(Siswa::className(), ['id' => 'id_siswa']);
+    }
 }

@@ -2,16 +2,15 @@
 
 namespace siswa\models;
 
-use common\models\Siswa;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\SiswaRwKelas;
+use common\models\Wali;
 
 /**
- * SiswaRwKelasSearch represents the model behind the search form about `common\models\SiswaRwKelas`.
+ * WaliSearch represents the model behind the search form about `common\models\Wali`.
  */
-class SiswaRwKelasSearch extends SiswaRwKelas
+class WaliSearch extends Wali
 {
     /**
      * @inheritdoc
@@ -19,8 +18,8 @@ class SiswaRwKelasSearch extends SiswaRwKelas
     public function rules()
     {
         return [
-            [['id', 'id_siswa', 'id_kelas', 'id_tahun_ajaran', 'id_tingkat', 'id_wali_kelas'], 'integer'],
-            [['nama_kelas'], 'safe'],
+            [['id', 'id_status_wali'], 'integer'],
+            [['nama', 'alamat', 'no_hp'], 'safe'],
         ];
     }
 
@@ -42,9 +41,8 @@ class SiswaRwKelasSearch extends SiswaRwKelas
      */
     public function search($params)
     {
-        $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
-        $query = SiswaRwKelas::find()->where(['id_siswa' => $siswa->id]);
-        
+        $query = Wali::find();
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -59,14 +57,12 @@ class SiswaRwKelasSearch extends SiswaRwKelas
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_siswa' => $this->id_siswa,
-            'id_kelas' => $this->id_kelas,
-            'id_tahun_ajaran' => $this->id_tahun_ajaran,
-            'id_tingkat' => $this->id_tingkat,
-            'id_wali_kelas' => $this->id_wali_kelas,
+            'id_status_wali' => $this->id_status_wali,
         ]);
 
-        $query->andFilterWhere(['like', 'nama_kelas', $this->nama_kelas]);
+        $query->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'alamat', $this->alamat])
+            ->andFilterWhere(['like', 'no_hp', $this->no_hp]);
 
         return $dataProvider;
     }

@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Url;
-use yii\helpers\Html;
 
 return [
     //[
@@ -17,47 +16,19 @@ return [
     // ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nis',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nama',
     ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'tempat_lahir',
-    // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'tanggal_lahir',
-    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'alamat',
     ],
     [
-        'class' => '\kartik\grid\DataColumn',
-        'header' => 'Kelas',
-        'attribute' => 'id_kelas',
-        'value' => function ($model) {
-            return $model->kelas->refTingkatKelas->tingkat_kelas;
-        }
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'no_hp',
     ],
     [
-        'class' => 'kartik\grid\ActionColumn',
-        'header' => 'Aksi',
-        'template' => '{btn_aksi}',
-        'buttons' => [
-            "btn_aksi" => function ($url, $model, $key) {
-                return Html::a('Tambah Akun', ['create-akun', 'id' => $model->id], [
-                    'class' => 'btn btn-success btn-block',
-                    'role' => 'modal-remote',
-                    'title' => 'Lihat',
-                    'data-toggle' => 'tooltip'
-                ]);
-            },
-
-        ]
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_status_wali',
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+
 
 /**
  * SiswaRwKelasController implements the CRUD actions for SiswaRwKelas model.
@@ -37,7 +39,7 @@ class SiswaRwKelasController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
+    {    
         $searchModel = new SiswaRwKelasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,18 +56,18 @@ class SiswaRwKelasController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "SiswaRwKelas #".$id,
+                    'title'=> "SiswaRwKelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Ubah',['update','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
         }else{
             return $this->render('view', [
                 'model' => $this->findModel($id),
@@ -82,7 +84,7 @@ class SiswaRwKelasController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new SiswaRwKelas();
+        $model = new SiswaRwKelas();  
 
         if($request->isAjax){
             /*
@@ -91,33 +93,33 @@ class SiswaRwKelasController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Create new SiswaRwKelas",
+                    'title'=> "Tambah SiswaRwKelas",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-
-                ];
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Create new SiswaRwKelas",
-                    'content'=>'<span class="text-success">Create SiswaRwKelas success</span>',
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                            Html::a('Create More',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-
-                ];
-            }else{
+                    'title'=> "Tambah SiswaRwKelas",
+                    'content'=>'<span class="text-success">Create SiswaRwKelas berhasil</span>',
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
                 return [
-                    'title'=> "Create new SiswaRwKelas",
+                    'title'=> "Tambah SiswaRwKelas",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-
-                ];
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
             }
         }else{
             /*
@@ -131,7 +133,7 @@ class SiswaRwKelasController extends Controller
                 ]);
             }
         }
-
+       
     }
 
     /**
@@ -144,7 +146,7 @@ class SiswaRwKelasController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);
+        $model = $this->findModel($id);       
 
         if($request->isAjax){
             /*
@@ -153,32 +155,32 @@ class SiswaRwKelasController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Update SiswaRwKelas #".$id,
+                    'title'=> "Ubah SiswaRwKelas",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-                ];
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "SiswaRwKelas #".$id,
+                    'title'=> "SiswaRwKelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                            Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
             }else{
                  return [
-                    'title'=> "Update SiswaRwKelas #".$id,
+                    'title'=> "Ubah SiswaRwKelas ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Close',['class'=>'btn btn-secondary float-left','data-dismiss'=>"modal"]).
-                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
-                ];
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+                ];        
             }
         }else{
             /*
@@ -230,7 +232,7 @@ class SiswaRwKelasController extends Controller
      * @return mixed
      */
     public function actionBulkdelete()
-    {
+    {        
         $request = Yii::$app->request;
         $pks = explode(',', $request->post( 'pks' )); // Array or selected records primary keys
         foreach ( $pks as $pk ) {
@@ -250,7 +252,7 @@ class SiswaRwKelasController extends Controller
             */
             return $this->redirect(['index']);
         }
-
+       
     }
 
     /**
