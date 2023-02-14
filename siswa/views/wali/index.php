@@ -6,8 +6,6 @@ use kartik\grid\GridView;
 use johnitvn\ajaxcrud\CrudAsset; 
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
-
-
 /* @var $this yii\web\View */
 /* @var $searchModel siswa\models\WaliSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

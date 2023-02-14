@@ -90,24 +90,25 @@ class WaliController extends Controller
         $data = ArrayHelper::map(RefStatusWali::find()->all(), 'id', 'status_wali');
         $model = new Wali();
         $id_user = Yii::$app->user->identity->id;
+        $model = new Wali();  
 
-        if ($request->isAjax) {
+        if($request->isAjax){
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($request->isGet) {
+            if($request->isGet){
                 return [
-                    'title' => "Tambah Wali",
-                    'content' => $this->renderAjax('create', [
+                    'title'=> "Tambah Wali",
+                    'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'statusWali' => $data,
+                        'data' => $data,
                     ]),
-                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
-                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
-
-                ];
-            } else if ($model->load($request->post())) {
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if ($model->load($request->post())) {
                 $siswa = Siswa::find()->where(['id_user' => $id_user])->one();
                 // 
                 $id_siswa = null;
@@ -210,7 +211,8 @@ class WaliController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel($id); 
+        $data = ArrayHelper::map(RefStatusWali::find()->all(), 'id', 'status_wali');      
 
         if($request->isAjax){
             /*
@@ -222,43 +224,96 @@ class WaliController extends Controller
                     'title'=> "Ubah Wali",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
+                        'data' => $data,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if ($model->load($request->post())) {
+
+                $id_siswa = $model->siswaWali->id_siswa;
+
+
+                if ($model->save()) {
+                    $siswaWali = SiswaWali::find()->where(['id_siswa' => $id_siswa, 'id_wali' => $model->id])->one();
+
+
+                    if (!$siswaWali) {
+                        $siswaWali = new SiswaWali();
+                    }
+                    $siswaWali->id_siswa = $id_siswa;
+                    $siswaWali->id_wali = $model->id;
+
+                    if ($siswaWali->save()) {
+                        return [
+
+                            'forceReload' => '#crud-datatable-pjax',
+                            'title' => "Wali ",
+                            'content' => $this->renderAjax('view', [
+                                'data' => $data,
+                                'model' => $model,
+                            ]),
+                            'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                                Html::a('Ubah', ['update', 'id' => $model->id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                        ];
+                    }
+                }
+
+
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Wali ",
-                    'content'=>$this->renderAjax('view', [
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Tambah Wali",
+                    'content' => '<span class="text-danger">Create Wali gagal!</span>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                        Html::a('Tambah Lagi', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                ];
+            } else {
+                return [
+                    'title' => "Ubah Wali ",
+                    'content' => $this->renderAjax('update', [
+                        'data' => $data,
                         'model' => $model,
                     ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                ];    
-            }else{
-                 return [
-                    'title'=> "Ubah Wali ",
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($request->post())) {
+                $id_siswa = $model->siswaWali->id_siswa;
+
+                if ($model->save()) {
+                    $siswaWali = SiswaWali::find()->where(['id_siswa' => $id_siswa])->one();
+
+                    if (!$siswaWali) {
+                        $siswaWali = new SiswaWali();
+                    }
+                    $siswaWali->id_siswa = $id_siswa;
+                    $siswaWali->id_wali = $model->id;
+
+                    if ($siswaWali->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+
+                // return $this->redirect(['view', 'id' => $model->id]);
+                return $this->render('create', [
+                    'model' => $model,
+                    'data' => $data,
+
+                ]);
             } else {
                 return $this->render('update', [
+                    'data' => $data,
                     'model' => $model,
                 ]);
             }
         }
     }
+
 
     /**
      * Delete an existing Wali model.
@@ -270,22 +325,25 @@ class WaliController extends Controller
     public function actionDelete($id)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        // $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
-        if($request->isAjax){
+        if ($model->siswaWali) {
+            $model->siswaWali->delete();
+            $model->delete();
+        }
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
-        }else{
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        } else {
             /*
             *   Process for non-ajax request
             */
             return $this->redirect(['index']);
         }
-
-
     }
 
      /**

@@ -12,6 +12,7 @@ use kartik\select2\Select2;
 <div class="wali-form">
 
   <?php $form = ActiveForm::begin(); ?>
+
   <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
   <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
@@ -19,7 +20,7 @@ use kartik\select2\Select2;
   <?= $form->field($model, 'no_hp')->textInput(['maxlength' => true]) ?>
 
   <?= $form->field($model, 'id_status_wali')->widget(Select2::classname(), [
-        'data' => $statusWali,
+        'data' => $data,
         'options' => ['placeholder' => '-Pilih Status Wali-'],
         'pluginOptions' => [
             'allowClear' => true
