@@ -4,27 +4,25 @@ use yii\helpers\Url;
 use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Siswa */
+/* @var $model common\models\SiswaRwKelas */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="siswa-form">
+<div class="siswa-rw-kelas-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nis')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
-
-    <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'id_siswa')->textInput() ?>
 
     <?= $form->field($model, 'id_kelas')->textInput() ?>
 
-    <?= $form->field($model, 'id_user')->textInput() ?>
+    <?= $form->field($model, 'id_tahun_ajaran')->textInput() ?>
+
+    <?= $form->field($model, 'nama_kelas')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'id_tingkat')->textInput() ?>
+
+    <?= $form->field($model, 'id_wali_kelas')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>

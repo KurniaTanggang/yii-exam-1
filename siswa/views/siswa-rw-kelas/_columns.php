@@ -14,49 +14,37 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nis',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'nama',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tempat_lahir',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'tanggal_lahir',
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'alamat',
-    ],
     // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id_kelas',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id_user',
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'id_kelas',
     // ],
     [
-        'class' => 'kartik\grid\ActionColumn',
-        'dropdown' => false,
-        'vAlign'=>'middle',
-        'urlCreator' => function($action, $model, $key, $index) { 
-                return Url::to([$action, 'id' => $model->id]);
-        },
-        'viewOptions'=>['role'=>'modal-remote','title'=>'Lihat','data-toggle'=>'tooltip'],
-        'updateOptions'=>['role'=>'modal-remote','title'=>'Ubah', 'data-toggle'=>'tooltip'],
-        'deleteOptions'=>['role'=>'modal-remote','title'=>'Hapus', 
-                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                          'data-request-method'=>'post',
-                          'data-toggle'=>'tooltip',
-                          'data-confirm-title'=>'Peringatan',
-                          'data-confirm-message'=>'Apakah anda yakin ingin menghapus data ini?'], 
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Tahun Ajaran',
+        'attribute' => 'id_tahun_ajaran',
+        'value' => function ($model) {
+            return $model->siswa->kelas->refTahunAjaran->tahun_ajaran;
+        }
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'nama_kelas',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Tingkat Kelas',
+        'attribute' => 'id_tingkat',
+        'value' => function ($model) {
+            return $model->siswa->kelas->refTingkatKelas->tingkat_kelas;
+        }
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Wali Kelas',
+        'attribute' => 'id_wali_kelas',
+        'value' => function ($model) {
+            return $model->siswa->kelas->namaGuru->nama_guru;
+        }
     ],
 
 ];   

@@ -3,7 +3,7 @@
 namespace siswa\controllers;
 
 use Yii;
-use common\models\Siswa;
+use common\models\SiswaRwKelas;
 use siswa\models\SiswaRwKelasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
 
 
 /**
- * SiswaRwKelasController implements the CRUD actions for Siswa model.
+ * SiswaRwKelasController implements the CRUD actions for SiswaRwKelas model.
  */
 class SiswaRwKelasController extends Controller
 {
@@ -35,7 +35,7 @@ class SiswaRwKelasController extends Controller
     }
 
     /**
-     * Lists all Siswa models.
+     * Lists all SiswaRwKelas models.
      * @return mixed
      */
     public function actionIndex()
@@ -51,7 +51,7 @@ class SiswaRwKelasController extends Controller
 
 
     /**
-     * Displays a single Siswa model.
+     * Displays a single SiswaRwKelas model.
      * @param integer $id
      * @return mixed
      */
@@ -61,7 +61,7 @@ class SiswaRwKelasController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Siswa ",
+                    'title'=> "SiswaRwKelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $this->findModel($id),
                     ]),
@@ -76,7 +76,7 @@ class SiswaRwKelasController extends Controller
     }
 
     /**
-     * Creates a new Siswa model.
+     * Creates a new SiswaRwKelas model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -84,7 +84,7 @@ class SiswaRwKelasController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Siswa();  
+        $model = new SiswaRwKelas();  
 
         if($request->isAjax){
             /*
@@ -93,7 +93,7 @@ class SiswaRwKelasController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Tambah Siswa",
+                    'title'=> "Tambah SiswaRwKelas",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -104,15 +104,15 @@ class SiswaRwKelasController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Tambah Siswa",
-                    'content'=>'<span class="text-success">Create Siswa berhasil</span>',
+                    'title'=> "Tambah SiswaRwKelas",
+                    'content'=>'<span class="text-success">Create SiswaRwKelas berhasil</span>',
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Tambah Siswa",
+                    'title'=> "Tambah SiswaRwKelas",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -137,7 +137,7 @@ class SiswaRwKelasController extends Controller
     }
 
     /**
-     * Updates an existing Siswa model.
+     * Updates an existing SiswaRwKelas model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -155,7 +155,7 @@ class SiswaRwKelasController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Ubah Siswa",
+                    'title'=> "Ubah SiswaRwKelas",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -165,7 +165,7 @@ class SiswaRwKelasController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Siswa ",
+                    'title'=> "SiswaRwKelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -174,7 +174,7 @@ class SiswaRwKelasController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Ubah Siswa ",
+                    'title'=> "Ubah SiswaRwKelas ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -197,7 +197,7 @@ class SiswaRwKelasController extends Controller
     }
 
     /**
-     * Delete an existing Siswa model.
+     * Delete an existing SiswaRwKelas model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -225,7 +225,7 @@ class SiswaRwKelasController extends Controller
     }
 
      /**
-     * Delete multiple existing Siswa model.
+     * Delete multiple existing SiswaRwKelas model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -256,15 +256,15 @@ class SiswaRwKelasController extends Controller
     }
 
     /**
-     * Finds the Siswa model based on its primary key value.
+     * Finds the SiswaRwKelas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Siswa the loaded model
+     * @return SiswaRwKelas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Siswa::findOne($id)) !== null) {
+        if (($model = SiswaRwKelas::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
