@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Wali */
 ?>
 <div class="wali-view">
-    <div class="table-responsive">
+  <div class="table-responsive">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -14,9 +14,15 @@ use yii\widgets\DetailView;
             'nama',
             'alamat:ntext',
             'no_hp',
-            'id_status_wali',
+            [
+                'label' => 'Status Wali',
+                'attribute' => 'id_status_wali',
+                'value' => function ($model) {
+                    return $model->statusWali->status_wali;
+                }
+            ],
         ],
     ]) ?>
-    </div>
+  </div>
 
 </div>
