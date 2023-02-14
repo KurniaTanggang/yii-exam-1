@@ -115,7 +115,7 @@ class MataPelajaranController extends Controller
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
         
                 ];         
-            }else if($model->load($request->post()) && $model->save()){
+            }else if($model->load($request->post()) && $model_guru_mata_pelajaran->load($request->post()) && $model->save()){
                 $model_guru_mata_pelajaran->id_mata_pelajaran = $model->id;
                 $model_guru_mata_pelajaran->save();
                 return [

@@ -5,6 +5,9 @@ namespace siswa\controllers;
 use Yii;
 use common\models\Wali;
 use siswa\models\WaliSearch;
+use common\models\RefStatusWali;
+use common\models\Siswa;
+use common\models\SiswaWali;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -84,56 +87,117 @@ class WaliController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new Wali();  
+        $data = ArrayHelper::map(RefStatusWali::find()->all(), 'id', 'status_wali');
+        $model = new Wali();
+        $id_user = Yii::$app->user->identity->id;
 
-        if($request->isAjax){
+        if ($request->isAjax) {
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if($request->isGet){
+            if ($request->isGet) {
                 return [
-                    'title'=> "Tambah Wali",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Tambah Wali",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
+                        'statusWali' => $data,
                     ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
-            }else if($model->load($request->post()) && $model->save()){
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
+            } else if ($model->load($request->post())) {
+                $siswa = Siswa::find()->where(['id_user' => $id_user])->one();
+                // 
+                $id_siswa = null;
+                if ($siswa) {
+                    $id_siswa = $siswa->id;
+                }
+
+                if ($model->save()) {
+                    // $siswaWali = SiswaWali::find()->where(['id_siswa' => $id_siswa, 'id_wali' => $model->id])->one();
+                    $siswaWali = new SiswaWali();
+
+                    // if (!$siswaWali) {
+                    //     $siswaWali = new SiswaWali();
+                    // }
+                    $siswaWali->id_siswa = $id_siswa;
+                    $siswaWali->id_wali = $model->id;
+
+                    if ($siswaWali->save()) {
+                        return [
+                            'forceReload' => '#crud-datatable-pjax',
+                            'title' => "Tambah Wali",
+                            'content' => '<span class="text-success">Create Wali berhasil</span>',
+                            'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                                Html::a('Tambah Lagi', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+                        ];
+                    }
+                }
+
+
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Tambah Wali",
-                    'content'=>'<span class="text-success">Create Wali berhasil</span>',
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-        
-                ];         
-            }else{           
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Tambah Wali",
+                    'content' => '<span class="text-danger">Create Wali gagal!</span>',
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"])
+
+                ];
+            } else {
                 return [
-                    'title'=> "Tambah Wali",
-                    'content'=>$this->renderAjax('create', [
+                    'title' => "Tambah Wali",
+                    'content' => $this->renderAjax('create', [
                         'model' => $model,
+                        'data' => $data,
+
                     ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
-        
-                ];         
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
+
+                ];
             }
-        }else{
+        } else {
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($request->post())) {
+                $siswa = Siswa::find()->where(['id_user' => $id_user])->one();
+                // 
+                $id_siswa = null;
+                if ($siswa) {
+                    $id_siswa = $siswa->id;
+                }
+
+                if ($model->save()) {
+                    // $siswaWali = SiswaWali::find()->where(['id_siswa' => $id_siswa])->one();
+
+                    // if (!$siswaWali) {
+                    //     $siswaWali = new SiswaWali();
+                    // }
+                    $siswaWali = new SiswaWali();
+                    $siswaWali->id_siswa = $id_siswa;
+                    $siswaWali->id_wali = $model->id;
+
+                    if ($siswaWali->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+
+                // return $this->redirect(['view', 'id' => $model->id]);
+                return $this->render('create', [
+                    'model' => $model,
+                    'data' => $data,
+
+                ]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'data' => $data,
+
                 ]);
             }
         }
-       
     }
 
     /**

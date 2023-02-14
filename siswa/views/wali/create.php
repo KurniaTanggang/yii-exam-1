@@ -8,7 +8,8 @@ use yii\helpers\Html;
 
 ?>
 <div class="wali-create">
-    <?= $this->render('_form', [
+  <?= $this->render('_form', [
         'model' => $model,
+        'statusWali' => $statusWali,
     ]) ?>
 </div>

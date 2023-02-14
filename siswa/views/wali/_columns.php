@@ -27,8 +27,12 @@ return [
         'attribute'=>'no_hp',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_status_wali',
+        'class' => '\kartik\grid\DataColumn',
+        'header' => 'Status Wali',
+        'attribute' => 'id_status_wali',
+        'value' => function ($model) {
+            return $model->statusWali->status_wali;
+        }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

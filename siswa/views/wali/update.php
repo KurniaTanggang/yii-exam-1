@@ -7,8 +7,9 @@ use yii\helpers\Html;
 ?>
 <div class="wali-update">
 
-    <?= $this->render('_form', [
+  <?= $this->render('_form', [
         'model' => $model,
+        'data' => $data,
     ]) ?>
 
 </div>
