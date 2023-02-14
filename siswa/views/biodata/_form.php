@@ -10,29 +10,24 @@ use yii\bootstrap4\ActiveForm;
 
 <div class="siswa-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+  <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nis')->textInput(['maxlength' => true]) ?>
+  <?= $form->field($model, 'nis')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
 
-    <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+  <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
+  <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
+  <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
 
-    <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
+  <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'id_kelas')->textInput() ?>
+  <?php if (!Yii::$app->request->isAjax){ ?>
+  <div class="form-group">
+    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+  </div>
+  <?php } ?>
 
-    <?= $form->field($model, 'id_user')->textInput() ?>
+  <?php ActiveForm::end(); ?>
 
-  
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
-
-    <?php ActiveForm::end(); ?>
-    
 </div>

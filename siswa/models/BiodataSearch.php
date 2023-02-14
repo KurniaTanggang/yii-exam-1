@@ -41,7 +41,7 @@ class BiodataSearch extends Siswa
      */
     public function search($params)
     {
-        $query = Siswa::find();
+        $query = Siswa::find()->where(['id_user' => Yii::$app->user->id]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

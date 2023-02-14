@@ -43,9 +43,13 @@ class BiodataController extends Controller
         $searchModel = new BiodataSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
+        $model = $siswa->id;
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

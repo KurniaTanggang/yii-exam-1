@@ -20,13 +20,13 @@ CrudAsset::register($this);
     <h6 class="element-header">
             </h6>
     <div class="element-box"> -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div id="ajaxCrudDatatable">
-                        <div id="table-responsive">
-                        <?=GridView::widget([
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div id="ajaxCrudDatatable">
+          <div id="table-responsive">
+            <?=GridView::widget([
                             'id'=>'crud-datatable',
                             'pager' => [
                                 'firstPageLabel' => 'Awal',
@@ -38,10 +38,8 @@ CrudAsset::register($this);
                             'columns' => require(__DIR__.'/_columns.php'),
                             'toolbar'=> [
                                 ['content'=>
-                                    Html::a('<i class="fas fa-redo"></i> ', [''],
-                                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
-                                    '{toggleData}'
-                                    // .'{export}'
+                                Html::a('Ubah', ['update', 'id' => $model],
+                                ['role'=>'modal-remote','title'=> 'Ubah Biodata','class'=>'btn btn-default']),
                                 ],
                             ],          
                             'striped' => true,
@@ -50,8 +48,8 @@ CrudAsset::register($this);
                             'panel' => [
                                 // 'type' => 'primary', 
                                 // 'heading' => '<i class="glyphicon glyphicon-list"></i> Siswas listing',
-                                'before'=>Html::a('Tambah', ['create'],
-                                    ['role'=>'modal-remote','title'=> 'Create new Siswas','class'=>'btn btn-default']),
+                                // 'before'=>Html::a('Tambah', ['create'],
+                                //     ['role'=>'modal-remote','title'=> 'Create new Siswas','class'=>'btn btn-default']),
                                 // 'after'=>BulkButtonWidget::widget([
                                 //             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
                                 //                 ["bulk-delete"] ,
@@ -67,12 +65,12 @@ CrudAsset::register($this);
                                         '<div class="clearfix"></div>',
                             ]
                         ])?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 </div>
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",

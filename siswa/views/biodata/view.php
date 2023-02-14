@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Siswa */
 ?>
 <div class="siswa-view">
-    <div class="table-responsive">
+  <div class="table-responsive">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -16,10 +16,8 @@ use yii\widgets\DetailView;
             'tempat_lahir',
             'tanggal_lahir',
             'alamat:ntext',
-            'id_kelas',
-            'id_user',
         ],
     ]) ?>
-    </div>
+  </div>
 
 </div>
