@@ -2,8 +2,6 @@
 
 namespace guru\controllers;
 
-use common\models\Guru;
-use common\models\GuruMataPelajaran;
 use Yii;
 use common\models\MataPelajaran;
 use guru\models\MataPelajaranSearch;
@@ -43,19 +41,11 @@ class MataPelajaranController extends Controller
     public function actionIndex()
     {    
         $searchModel = new MataPelajaranSearch();
-
-        $guru = Guru::find()->where(['id_user' => Yii::$app->user->identity->id])->one();
-        $guruMataPelajaran = GuruMataPelajaran::find()->where(['id_guru' => $guru->id])->all();
-
-        $dataProviderGuruMataPelajaran = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProviderGuruMataPelajaran->query->andFilterWhere(['id' => $guruMataPelajaran]);
-
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'dataProviderGuruMataPelajaran' => $dataProviderGuruMataPelajaran,
         ]);
     }
 
