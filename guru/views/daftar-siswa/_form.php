@@ -16,9 +16,15 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
+
     <?= $form->field($model, 'alamat')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'id_kelas')->textInput() ?>
+
+    <?= $form->field($model, 'id_user')->textInput() ?>
 
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
