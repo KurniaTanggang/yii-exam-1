@@ -2,10 +2,13 @@
 
 namespace guru\controllers;
 
+use common\models\Guru;
+use common\models\Kelas;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -69,8 +72,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        return $this->render('index');
+        $guru = Guru::find()->where(['id_user' => Yii::$app->user->identity->id])->one();
+        $kelas = Kelas::find()->where(['id_wali_kelas' => $guru->id])->one();
+        return $this->render('index', [
+            'guru' => $guru->nama_guru,
+            'kelas' => $kelas->nama_kelas,
+        ]);
     }
 
     /**
