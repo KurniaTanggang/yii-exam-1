@@ -2,6 +2,8 @@
 
 namespace siswa\models;
 
+use common\models\Siswa;
+use common\models\SiswaWali;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -41,7 +43,14 @@ class WaliSearch extends Wali
      */
     public function search($params)
     {
+        // $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
+        // $waliSiswa = SiswaWali::find()->where(['id_siswa' => $siswa->id])->one();
+        // if($waliSiswa)
+        //     $query = Wali::find()->where(['id' => $waliSiswa->id_wali ]);
+        // else
+        //     return array();
         $query = Wali::find();
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

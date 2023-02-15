@@ -44,7 +44,23 @@ class WaliController extends Controller
     public function actionIndex()
     {    
         $searchModel = new WaliSearch();
+        
+        
+        $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->identity->id])->one();
+        $waliSiswa = SiswaWali::find()->where(['id_siswa' => $siswa->id])->asArray()->all();
+        $waliSiswa = array_column($waliSiswa, 'id_wali');
+        
+        // $dump_waliSiswa = ArrayHelper::map(SiswaWali::find()->all(), 'id', 'id_wali');
+        // var_dump($waliSiswa);
+        // var_dump($dump_waliSiswa);
+        // die;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        if($waliSiswa)
+            $dataProvider->query->andFilterWhere(['id' => $waliSiswa]);
+        else
+            $dataProvider->query->andFilterWhere(['id' => '0']);
+            
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -90,7 +106,6 @@ class WaliController extends Controller
         $data = ArrayHelper::map(RefStatusWali::find()->all(), 'id', 'status_wali');
         $model = new Wali();
         $id_user = Yii::$app->user->identity->id;
-        $model = new Wali();  
 
         if($request->isAjax){
             /*
@@ -117,12 +132,8 @@ class WaliController extends Controller
                 }
 
                 if ($model->save()) {
-                    // $siswaWali = SiswaWali::find()->where(['id_siswa' => $id_siswa, 'id_wali' => $model->id])->one();
                     $siswaWali = new SiswaWali();
 
-                    // if (!$siswaWali) {
-                    //     $siswaWali = new SiswaWali();
-                    // }
                     $siswaWali->id_siswa = $id_siswa;
                     $siswaWali->id_wali = $model->id;
 
@@ -171,11 +182,6 @@ class WaliController extends Controller
                 }
 
                 if ($model->save()) {
-                    // $siswaWali = SiswaWali::find()->where(['id_siswa' => $id_siswa])->one();
-
-                    // if (!$siswaWali) {
-                    //     $siswaWali = new SiswaWali();
-                    // }
                     $siswaWali = new SiswaWali();
                     $siswaWali->id_siswa = $id_siswa;
                     $siswaWali->id_wali = $model->id;
