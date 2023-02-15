@@ -20,10 +20,10 @@ class GuruMataPelajaran extends \yii\db\ActiveRecord
         return 'guru_mata_pelajaran';
     }
 
-    public static function primaryKey()
-{
-    return ['id_mata_pelajaran'];
-}
+//     public static function primaryKey()
+// {
+//     return ['id_mata_pelajaran'];
+// }
 
     /**
      * {@inheritdoc}
@@ -50,6 +50,11 @@ class GuruMataPelajaran extends \yii\db\ActiveRecord
     public function getNamaGuru()
     {
         return $this->hasOne(Guru::className(), ['id' => 'id_guru']);
+    }
+
+    public function getMataPelajaran()
+    {
+        return $this->hasOne(MataPelajaran::className(), ['id' => 'id_mata_pelajaran']);
     }
     
     
