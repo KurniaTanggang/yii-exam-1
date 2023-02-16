@@ -21,7 +21,7 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Tingkat Kelas',
+        'label' => 'Tingkat Kelas',
         'attribute' => 'id_tingkat_kelas',
         'value' => function ($model) {
             return $model->refTingkatKelas->tingkat_kelas;
@@ -29,7 +29,7 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Jurusan',
+        'label' => 'Jurusan',
         'attribute' => 'id_jurusan',
         'value' => function ($model) {
             return $model->refJurusan->jurusan;
