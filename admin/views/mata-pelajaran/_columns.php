@@ -36,14 +36,6 @@ return [
         }
     ],
     [
-        'class' => '\kartik\grid\DataColumn',
-        'header' => 'Guru Pengampu',
-        'attribute' => 'id',
-        'value' => function ($model) {
-            return $model->guruMataPelajaran->namaGuru->nama_guru;
-        }
-    ],
-    [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',

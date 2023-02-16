@@ -26,13 +26,6 @@ use yii\widgets\DetailView;
                     return $model->refJurusan->jurusan;
                 }
             ],
-            [
-                'label' => 'Guru Pengampu',
-                'attribute' => 'id',
-                'value' => function ($model) {
-                    return $model->guruMataPelajaran->namaGuru->nama_guru;
-                }
-            ],
         ],
     ]) ?>
   </div>
