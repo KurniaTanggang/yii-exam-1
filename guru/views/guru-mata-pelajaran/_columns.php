@@ -10,16 +10,28 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-    //     [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'id_guru',
+        // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'id',
     // ],
     [
-        'label'=>'Mata Pelajaran',
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_mata_pelajaran',
+        'attribute'=>'mata_pelajaran',
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Tingkat Kelas',
+        'attribute' => 'id_tingkat_kelas',
         'value' => function ($model) {
-            return $model->mataPelajaran->mata_pelajaran;
+            return $model->refTingkatKelas->tingkat_kelas;
+        }
+    ],
+    [
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Jurusan',
+        'attribute' => 'id_jurusan',
+        'value' => function ($model) {
+            return $model->refJurusan->jurusan;
         }
     ],
     [
@@ -27,7 +39,7 @@ return [
         'dropdown' => false,
         'vAlign'=>'middle',
         'urlCreator' => function($action, $model, $key, $index) { 
-                return Url::to([$action, 'id' => $model->id_guru]);
+                return Url::to([$action, 'id' => $model->id]);
         },
         'viewOptions'=>['role'=>'modal-remote','title'=>'Lihat','data-toggle'=>'tooltip'],
         'updateOptions'=>['role'=>'modal-remote','title'=>'Ubah', 'data-toggle'=>'tooltip'],

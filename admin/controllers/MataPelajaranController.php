@@ -131,6 +131,10 @@ class MataPelajaranController extends Controller
                     'title'=> "Tambah MataPelajaran",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'tingkat_kelas' => $tingkat_kelas,
+                        'jurusan' => $jurusan,
+                        'guru' => $guru,
+                        'model_guru_mata_pelajaran' => $model_guru_mata_pelajaran,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])

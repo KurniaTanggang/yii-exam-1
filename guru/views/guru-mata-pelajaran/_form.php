@@ -5,21 +5,31 @@ use yii\bootstrap4\ActiveForm;
 use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\GuruMataPelajaran */
+/* @var $model common\models\MataPelajaran */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="guru-mata-pelajaran-form">
+<div class="mata-pelajaran-form">
 
   <?php $form = ActiveForm::begin(); ?>
 
-  <?= $form->field($model, 'id_mata_pelajaran')->widget(Select2::classname(), [
-        'data' => $data,
-        'options' => ['placeholder' => '-Pilih Mata Pelajaran-'],
+  <?= $form->field($model, 'mata_pelajaran')->textInput(['maxlength' => true]) ?>
+
+  <?= $form->field($model, 'id_tingkat_kelas')->widget(Select2::classname(), [
+        'data' => $tingkatKelas,
+        'options' => ['placeholder' => '-Pilih Tingkat Kelas-'],
         'pluginOptions' => [
             'allowClear' => true
         ],
-    ])->label('Mata Pelajaran'); ?>
+    ])->label('Tingkat Kelas'); ?>
+
+  <?= $form->field($model, 'id_jurusan')->widget(Select2::classname(), [
+        'data' => $jurusan,
+        'options' => ['placeholder' => '-Pilih Jurusan-'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])->label('Jurusan'); ?>
 
 
   <?php if (!Yii::$app->request->isAjax){ ?>

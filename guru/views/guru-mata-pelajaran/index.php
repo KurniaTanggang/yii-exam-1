@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel guru\models\GuruMataPelajaranSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Guru Mata Pelajarans';
+$this->title = 'Mata Pelajarans';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -20,13 +20,13 @@ CrudAsset::register($this);
     <h6 class="element-header">
             </h6>
     <div class="element-box"> -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div id="ajaxCrudDatatable">
-                        <div id="table-responsive">
-                        <?=GridView::widget([
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div id="ajaxCrudDatatable">
+          <div id="table-responsive">
+            <?=GridView::widget([
                             'id'=>'crud-datatable',
                             'pager' => [
                                 'firstPageLabel' => 'Awal',
@@ -37,21 +37,21 @@ CrudAsset::register($this);
                             'pjax'=>true,
                             'columns' => require(__DIR__.'/_columns.php'),
                             'toolbar'=> [
-                                ['content'=>
-                                    Html::a('<i class="fas fa-redo"></i> ', [''],
-                                    ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
-                                    '{toggleData}'
-                                    // .'{export}'
-                                ],
+                                // ['content'=>
+                                //     Html::a('<i class="fas fa-redo"></i> ', [''],
+                                //     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
+                                //     '{toggleData}'
+                                //     // .'{export}'
+                                // ],
                             ],          
                             'striped' => true,
                             'condensed' => true,
                             'responsive' => true,          
                             'panel' => [
                                 // 'type' => 'primary', 
-                                // 'heading' => '<i class="glyphicon glyphicon-list"></i> Guru Mata Pelajarans listing',
+                                // 'heading' => '<i class="glyphicon glyphicon-list"></i> Mata Pelajarans listing',
                                 'before'=>Html::a('Tambah', ['create'],
-                                    ['role'=>'modal-remote','title'=> 'Create new Guru Mata Pelajarans','class'=>'btn btn-default']),
+                                    ['role'=>'modal-remote','title'=> 'Create new Mata Pelajarans','class'=>'btn btn-default']),
                                 // 'after'=>BulkButtonWidget::widget([
                                 //             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
                                 //                 ["bulk-delete"] ,
@@ -67,12 +67,12 @@ CrudAsset::register($this);
                                         '<div class="clearfix"></div>',
                             ]
                         ])?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 </div>
 <?php Modal::begin([
     "id"=>"ajaxCrudModal",

@@ -5,12 +5,12 @@ namespace guru\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\GuruMataPelajaran;
+use common\models\MataPelajaran;
 
 /**
- * GuruMataPelajaranSearch represents the model behind the search form about `common\models\GuruMataPelajaran`.
+ * GuruMataPelajaranSearch represents the model behind the search form about `common\models\MataPelajaran`.
  */
-class GuruMataPelajaranSearch extends GuruMataPelajaran
+class GuruMataPelajaranSearch extends MataPelajaran
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class GuruMataPelajaranSearch extends GuruMataPelajaran
     public function rules()
     {
         return [
-            [['id_guru', 'id_mata_pelajaran'], 'integer'],
+            [['id', 'id_tingkat_kelas', 'id_jurusan'], 'integer'],
+            [['mata_pelajaran'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class GuruMataPelajaranSearch extends GuruMataPelajaran
      */
     public function search($params)
     {
-        $query = GuruMataPelajaran::find();
+        $query = MataPelajaran::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,9 +56,12 @@ class GuruMataPelajaranSearch extends GuruMataPelajaran
         }
 
         $query->andFilterWhere([
-            'id_guru' => $this->id_guru,
-            'id_mata_pelajaran' => $this->id_mata_pelajaran,
+            'id' => $this->id,
+            'id_tingkat_kelas' => $this->id_tingkat_kelas,
+            'id_jurusan' => $this->id_jurusan,
         ]);
+
+        $query->andFilterWhere(['like', 'mata_pelajaran', $this->mata_pelajaran]);
 
         return $dataProvider;
     }

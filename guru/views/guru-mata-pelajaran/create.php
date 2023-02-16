@@ -4,12 +4,14 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\GuruMataPelajaran */
+/* @var $model common\models\MataPelajaran */
 
 ?>
-<div class="guru-mata-pelajaran-create">
+<div class="mata-pelajaran-create">
   <?= $this->render('_form', [
         'model' => $model,
-        'data' => $data,
+        'tingkatKelas' => $tingkatKelas,
+        'jurusan' => $jurusan,
+        'modelGuruMataPelajaran' => $modelGuruMataPelajaran,
     ]) ?>
 </div>
