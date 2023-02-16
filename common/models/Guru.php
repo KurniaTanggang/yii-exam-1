@@ -44,4 +44,9 @@ class Guru extends \yii\db\ActiveRecord
             'id_user' => 'Id User',
         ];
     }
+
+    public function getAkun()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
 }

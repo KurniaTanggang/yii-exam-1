@@ -232,6 +232,27 @@ class SiswaController extends Controller
        
     }
 
+    
+    public function actionLihatAkun($id)
+    {   
+        $request = Yii::$app->request;
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                    'title'=> "Akun Guru ",
+                    'content'=>$this->renderAjax('lihat-akun', [
+                        'model' => $this->findModel($id),
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Ubah',['update','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
+        }else{
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+    }
+
     /**
      * Updates an existing Siswa model.
      * For ajax request will return json object

@@ -25,16 +25,25 @@ return [
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'header' => 'Aksi',
+        'header' => 'Akun Guru',
         'template' => '{btn_aksi}',
         'buttons' => [
             "btn_aksi" => function ($url, $model, $key) {
-                return Html::a('Tambah Akun', ['create-akun', 'id' => $model->id], [
-                    'class' => 'btn btn-success btn-block',
-                    'role' => 'modal-remote',
-                    'title' => 'Lihat',
-                    'data-toggle' => 'tooltip'
-                ]);
+                if($model->id_user){
+                    return Html::a('Lihat Akun', ['lihat-akun', 'id' => $model->id], [
+                        'class' => 'btn btn-success btn-block',
+                        'role' => 'modal-remote',
+                        'title' => 'Lihat',
+                        'data-toggle' => 'tooltip'
+                    ]);
+                } else {
+                    return Html::a('Tambah Akun', ['create-akun', 'id' => $model->id], [
+                        'class' => 'btn btn-primary btn-block',
+                        'role' => 'modal-remote',
+                        'title' => 'Lihat',
+                        'data-toggle' => 'tooltip'
+                    ]);
+                }
             },
 
         ]
