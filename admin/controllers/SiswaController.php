@@ -47,12 +47,38 @@ class SiswaController extends Controller
     public function actionIndex()
     {    
         $searchModel = new SiswaSearch();
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionIndex2($id)
+    {    
+        $searchModel = new SiswaSearch();
+        $siswa = Siswa::find()->where(['id_kelas' => $id])->asArray()->all();
+        $siswa = array_column($siswa, 'id');
+        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if($siswa)
+            $dataProvider->query->andFilterWhere(['id' => $siswa]);
+        else
+            $dataProvider->query->andFilterWhere(['id' => '0']);
+        
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+                'title'=> "Kelas ",
+                'content'=>$this->renderAjax('index2', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                ]),
+                'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                        Html::a('Tambah Siswa',['siswa-kelas/tambah-siswa','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+            ];    
     }
 
 
@@ -91,7 +117,6 @@ class SiswaController extends Controller
     {
         $request = Yii::$app->request;
 
-        $data = ArrayHelper::map(Kelas::find()->all(), 'id', 'nama_kelas');
 
         $model = new Siswa();
         $model_rw_siswa = new SiswaRwKelas();  
@@ -106,7 +131,6 @@ class SiswaController extends Controller
                     'title'=> "Tambah Siswa",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'data' => $data,
                         'model_rw_siswa' => $model_rw_siswa,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
@@ -114,14 +138,7 @@ class SiswaController extends Controller
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                $kelas =  Kelas::find()->where(['id' => $model->id_kelas])->one();
-                $model_rw_siswa->id_siswa = $model->id;
-                $model_rw_siswa->id_kelas = $model->id_kelas;
-                $model_rw_siswa->id_tahun_ajaran = $kelas->id_tahun_ajaran;
-                $model_rw_siswa->nama_kelas = $kelas->nama_kelas;
-                $model_rw_siswa->id_tingkat = $kelas->id_tingkat;
-                $model_rw_siswa->id_wali_kelas = $kelas->id_wali_kelas;
-                $model_rw_siswa->save();
+                
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Siswa",
@@ -135,7 +152,6 @@ class SiswaController extends Controller
                     'title'=> "Tambah Siswa",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
-                        'data' => $data,
                         'model_rw_siswa' => $model_rw_siswa,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
@@ -149,20 +165,11 @@ class SiswaController extends Controller
             */
             
             if ($model->load($request->post()) && $model->save()) {
-                $kelas =  Kelas::find()->where(['id' => $model->id_kelas])->one();
-                $model_rw_siswa->id_siswa = $model->id;
-                $model_rw_siswa->id_kelas = $model->id_kelas;
-                $model_rw_siswa->id_tahun_ajaran = $kelas->id_tahun_ajaran;
-                $model_rw_siswa->nama_kelas = $kelas->nama_kelas;
-                $model_rw_siswa->id_tingkat = $kelas->id_tingkat;
-                $model_rw_siswa->id_wali_kelas = $kelas->id_wali_kelas;
-                $model_rw_siswa->save();
+                
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'data' => $data,
-                    'model_rw_siswa' => $model_rw_siswa,
                 ]);
             }
         }
@@ -263,7 +270,7 @@ class SiswaController extends Controller
     public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $data = ArrayHelper::map(Kelas::find()->all(), 'id', 'nama_kelas');
+        //$data = ArrayHelper::map(Kelas::find()->all(), 'id', 'nama_kelas');
         $model = $this->findModel($id);       
 
         if($request->isAjax){
@@ -276,7 +283,7 @@ class SiswaController extends Controller
                     'title'=> "Ubah Siswa",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
-                        'data' => $data,
+                        // 'data' => $data,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -287,7 +294,7 @@ class SiswaController extends Controller
                     'title'=> "Siswa ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
-                        'data' => $data,
+                        // 'data' => $data,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
@@ -297,7 +304,7 @@ class SiswaController extends Controller
                     'title'=> "Ubah Siswa ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
-                        'data' => $data,
+                        // 'data' => $data,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                                 Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
@@ -312,7 +319,7 @@ class SiswaController extends Controller
             } else {
                 return $this->render('update', [
                     'model' => $model,
-                    'data' => $data,
+                    // 'data' => $data,
                 ]);
             }
         }

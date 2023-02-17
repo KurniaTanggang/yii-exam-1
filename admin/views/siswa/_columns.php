@@ -23,14 +23,14 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nama',
     ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'tempat_lahir',
-    // ],
-    // [
-    //     'class'=>'\kartik\grid\DataColumn',
-    //     'attribute'=>'tanggal_lahir',
-    // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tempat_lahir',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'tanggal_lahir',
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'alamat',
@@ -40,12 +40,12 @@ return [
         'header' => 'Kelas',
         'attribute' => 'id_kelas',
         'value' => function ($model) {
-            return $model->kelas->refTingkatKelas->tingkat_kelas;
+            return $model->kelas->nama_kelas??"NOT SET";
         }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
-        'header' => 'Akun Guru',
+        'header' => 'Akun Siswa',
         'template' => '{btn_aksi}',
         'buttons' => [
             "btn_aksi" => function ($url, $model, $key) {

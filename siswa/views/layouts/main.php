@@ -38,7 +38,7 @@ AppAsset::register($this);
         ]);
         $menuItems = [
             ['label' => 'Dashboard', 'url' => ['/site/index']],
-            ['label' => 'Biodata', 'url' => ['/biodata/index']],
+            ['label' => 'Biodata', 'url' => ['/biodata/view']],
             ['label' => 'Riwayat Kelas', 'url' => ['/siswa-rw-kelas/index']],
             ['label' => 'Wali Murid', 'url' => ['/wali/index']],
         ];

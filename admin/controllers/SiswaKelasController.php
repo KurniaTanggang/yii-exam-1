@@ -1,10 +1,12 @@
 <?php
 
-namespace siswa\controllers;
+namespace admin\controllers;
 
 use Yii;
+use common\models\Kelas;
+use admin\models\SiswaKelasSearch;
 use common\models\Siswa;
-use siswa\models\BiodataSearch;
+use common\models\SiswaRwKelas;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,9 +16,9 @@ use yii\helpers\ArrayHelper;
 
 
 /**
- * BiodataController implements the CRUD actions for Siswa model.
+ * SiswaKelasController implements the CRUD actions for Kelas model.
  */
-class BiodataController extends Controller
+class SiswaKelasController extends Controller
 {
     /**
      * @inheritdoc
@@ -35,60 +37,74 @@ class BiodataController extends Controller
     }
 
     /**
-     * Lists all Siswa models.
+     * Lists all Kelas models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new BiodataSearch();
+        $searchModel = new SiswaKelasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
-        $model = $siswa->id;
-        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model' => $model,
         ]);
     }
 
 
     /**
-     * Displays a single Siswa model.
+     * Displays a single Kelas model.
      * @param integer $id
      * @return mixed
      */
-    public function actionView()
+    public function actionView($id)
     {   
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "Siswa ",
+                    'title'=> "Kelas ",
                     'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel(),
+                        'model' => $this->findModel($id),
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Ubah',['update' ],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Ubah',['update','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
-                'model' => $this->findModel(),
+                'model' => $this->findModel($id),
             ]);
         }
     }
 
-    /**
-     * Creates a new Siswa model.
-     * For ajax request will return json object
-     * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
+    public function actionLihatSiswa($id)
+    {   
+        $request = Yii::$app->request;
+        $model = Siswa::find()->where(['id_kelas' => $id])->asArray()->all();
+        $model = array_column($model, 'nama');
+        if($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                    'title'=> "Kelas ",
+                    'content'=>$this->renderAjax('lihat-siswa', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Tambah Siswa',['tambah-siswa','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
+        }else{
+            return $this->render('lihat-siswa', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionTambahSiswa($id)
     {
         $request = Yii::$app->request;
-        $model = new Siswa();  
+        $riwayatKelas = new SiswaRwKelas(); 
+        $model = $this->findModel($id); 
+        $siswa = ArrayHelper::map(Siswa::find()->where(['NOT', ['id_kelas' => $id]])->orWhere(['id_kelas' => null])->all(), 'id', 'nama');
 
         if($request->isAjax){
             /*
@@ -97,7 +113,106 @@ class BiodataController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Tambah Siswa",
+                    'title'=> "Tambah Kelas",
+                    'content'=>$this->renderAjax('create', [
+                        'riwayatKelas' => $riwayatKelas,
+                        'siswa' => $siswa,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($riwayatKelas->load($request->post())){
+                $riwayatKelas->id_kelas = $id;
+                $riwayatKelas->id_tahun_ajaran = $model->id_tahun_ajaran;
+                $riwayatKelas->nama_kelas = $model->nama_kelas;
+                $riwayatKelas->id_tingkat = $model->id_tingkat;
+                $riwayatKelas->id_wali_kelas = $model->id_wali_kelas;
+                $riwayatKelas->save();
+                $getSiswa = Siswa::find()->where(['id' => $riwayatKelas->id_siswa])->one();
+                $getSiswa->id_kelas = $id;
+                $getSiswa->save();
+
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Tambah Kelas",
+                    'content'=>'<span class="text-success">Create Kelas berhasil</span>',
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Tambah Lagi',['tambah-siswa', 'id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Tambah Kelas",
+                    'content'=>$this->renderAjax('create', [
+                        'model' => $model,
+                        'siswa' => $siswa,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'siswa' => $siswa,
+                ]);
+            }
+        }
+       
+    }
+    /**
+     * Creates a new Kelas model.
+     * For ajax request will return json object
+     * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+
+    public function actionHapusSiswa($id)
+    {
+        $request = Yii::$app->request;
+        // $this->findModel($id)->delete();
+        // $model = $this->findModel($id);
+        $siswa = Siswa::find()->where(['id' => $id])->one();
+        $siswa->id_kelas = null;
+        $siswa->save();
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+
+
+    }
+
+    public function actionCreate()
+    {
+        $request = Yii::$app->request;
+        $model = new Kelas();  
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Tambah Kelas",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -108,15 +223,15 @@ class BiodataController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Tambah Siswa",
-                    'content'=>'<span class="text-success">Create Siswa berhasil</span>',
+                    'title'=> "Tambah Kelas",
+                    'content'=>'<span class="text-success">Create Kelas berhasil</span>',
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Tambah Siswa",
+                    'title'=> "Tambah Kelas",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -139,18 +254,17 @@ class BiodataController extends Controller
         }
        
     }
-
     /**
-     * Updates an existing Siswa model.
+     * Updates an existing Kelas model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel();       
+        $model = $this->findModel($id);       
 
         if($request->isAjax){
             /*
@@ -159,7 +273,7 @@ class BiodataController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Ubah Siswa",
+                    'title'=> "Ubah Kelas",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -169,7 +283,7 @@ class BiodataController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Siswa ",
+                    'title'=> "Kelas ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
@@ -178,7 +292,7 @@ class BiodataController extends Controller
                 ];    
             }else{
                  return [
-                    'title'=> "Ubah Siswa ",
+                    'title'=> "Ubah Kelas ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -201,7 +315,7 @@ class BiodataController extends Controller
     }
 
     /**
-     * Delete an existing Siswa model.
+     * Delete an existing Kelas model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -229,7 +343,7 @@ class BiodataController extends Controller
     }
 
      /**
-     * Delete multiple existing Siswa model.
+     * Delete multiple existing Kelas model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -260,17 +374,15 @@ class BiodataController extends Controller
     }
 
     /**
-     * Finds the Siswa model based on its primary key value.
+     * Finds the Kelas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Siswa the loaded model
+     * @return Kelas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel()
+    protected function findModel($id)
     {
-        $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
-        $id = $siswa->id;
-        if (($model = Siswa::findOne($id)) !== null) {
+        if (($model = Kelas::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
