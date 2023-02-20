@@ -59,26 +59,29 @@ class SiswaController extends Controller
     public function actionIndex2($id)
     {    
         $searchModel = new SiswaSearch();
-        $siswa = Siswa::find()->where(['id_kelas' => $id])->asArray()->all();
-        $siswa = array_column($siswa, 'id');
         
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['id_kelas' => $id]);
 
-        if($siswa)
-            $dataProvider->query->andFilterWhere(['id' => $siswa]);
-        else
-            $dataProvider->query->andFilterWhere(['id' => '0']);
         
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return [
-                'title'=> "Kelas ",
-                'content'=>$this->renderAjax('index2', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                ]),
-                'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                        Html::a('Tambah Siswa',['siswa-kelas/tambah-siswa','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
-            ];    
+        $request = Yii::$app->request;
+        if ($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                    'title'=> "Kelas ",
+                    'content'=>$this->renderAjax('index2', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Tambah Siswa',['siswa-kelas/tambah-siswa','id' => $id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                ];    
+        }else{
+            return $this->render('index2', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
 

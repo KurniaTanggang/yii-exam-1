@@ -17,7 +17,7 @@ $this->title = 'Aplikasi Guru';
         Wali Kelas
       </div>
       <div class="card-body">
-        <h5 class="card-title"><?= $kelas; ?></h5>
+        <h5 class="card-title"><?= $kelas??"-Kelas belum diambil-"; ?></h5>
       </div>
     </div>
     <!-- <div class="row">
