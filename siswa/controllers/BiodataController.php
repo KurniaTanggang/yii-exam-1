@@ -151,13 +151,14 @@ class BiodataController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel();       
-
+        
         if($request->isAjax){
             /*
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
+
                 return [
                     'title'=> "Ubah Siswa",
                     'content'=>$this->renderAjax('update', [

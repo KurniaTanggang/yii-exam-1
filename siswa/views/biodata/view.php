@@ -8,7 +8,7 @@ use johnitvn\ajaxcrud\CrudAsset;
 /* @var $this yii\web\View */
 /* @var $model common\models\Siswa */
 $this->title = 'Biodata';
-
+CrudAsset::register($this);
 ?>
 <div class="siswa-view">
   <div class="form-group text-right">
@@ -30,3 +30,9 @@ $this->title = 'Biodata';
   </div>
 
 </div>
+
+<?php Modal::begin([
+    "id"=>"ajaxCrudModal",
+    "footer"=>"",// always need it for jquery plugin
+])?>
+<?php Modal::end(); ?>

@@ -3,7 +3,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap4\Modal;
 use kartik\grid\GridView;
-use johnitvn\ajaxcrud\CrudAsset; 
+use siswa\assets\CrudAsset; 
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
@@ -20,6 +20,7 @@ CrudAsset::register($this);
     <h6 class="element-header">
             </h6>
     <div class="element-box"> -->
+
 <div class="row">
   <div class="col-12">
     <div class="card">
