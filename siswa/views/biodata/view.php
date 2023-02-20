@@ -12,14 +12,13 @@ CrudAsset::register($this);
 ?>
 <div class="siswa-view">
   <div class="form-group text-right">
-    <?=  Html::a('Ubah',['update'],['class'=>'btn btn-primary','role'=>'modal-remote', 'title'=> 'Ubah Biodata']) ?>
+    <?=  Html::a('Ubah',['update'],['class'=>'btn btn-primary','role'=>'modal-remote', 'data-pjax'=>'1', 'title'=> 'Ubah Biodata']) ?>
 
   </div>
   <div class="table-responsive mt-3">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'nis',
             'nama',
             'tempat_lahir',

@@ -151,7 +151,6 @@ class BiodataController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel();       
-        
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -171,11 +170,10 @@ class BiodataController extends Controller
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Siswa ",
-                    'content'=>$this->renderAjax('view', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'content'=>'<span class="text-success">Ubah Biodata Siswa berhasil</span>',
+
+                    // 'footer'=> Html::button('Tutup', ['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                    //         Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
