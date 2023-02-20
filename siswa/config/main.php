@@ -13,6 +13,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        
         'request' => [
             'csrfParam' => '_csrf-siswa',
             'class' => 'common\components\Request',
