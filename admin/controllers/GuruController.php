@@ -5,6 +5,7 @@ namespace admin\controllers;
 use Yii;
 use common\models\Guru;
 use admin\models\GuruSearch;
+use common\models\AuthAssignment;
 use common\models\CreateNewAkun;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -163,6 +164,11 @@ class GuruController extends Controller
                 $lastId = Yii::$app->db->getLastInsertID();
                 $model->id_user = $lastId;
                 $model->save();
+
+                $auth = new AuthAssignment();
+                $auth->user_id = $lastId;
+                $auth->item_name = 'Guru';
+                $auth->save(false);
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Akun",

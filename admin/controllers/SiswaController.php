@@ -5,6 +5,7 @@ namespace admin\controllers;
 use Yii;
 use common\models\Siswa;
 use admin\models\SiswaSearch;
+use common\models\AuthAssignment;
 use common\models\RefTingkatKelas;
 use common\models\CreateNewAkun;
 use common\models\Kelas;
@@ -205,6 +206,11 @@ class SiswaController extends Controller
                 $lastId = Yii::$app->db->getLastInsertID();
                 $model->id_user = $lastId;
                 $model->save();
+
+                $auth = new AuthAssignment();
+                $auth->user_id = $lastId;
+                $auth->item_name = 'Siswa';
+                $auth->save(false);
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah Akun",
