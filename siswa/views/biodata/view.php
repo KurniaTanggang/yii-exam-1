@@ -10,15 +10,19 @@ use johnitvn\ajaxcrud\CrudAsset;
 /* @var $model common\models\Siswa */
 $this->title = 'Biodata';
 CrudAsset::register($this);
+
+$this->registerJs(' 
+$.pjax.defaults.timeout = false;      
+');
 ?>
 <div class="siswa-view">
   <div class="form-group text-right">
-    <?=  Html::a('Ubah',['update'],['class'=>'btn btn-primary','role'=>'modal-remote', 'title'=> 'Ubah Biodata']) ?>
+    <?=  Html::a('Ubah',['update', 'id'=>$model->id],['class'=>'btn btn-primary','role'=>'modal-remote', 'pjax'=>true, 'title'=> 'Ubah Biodata', 'id'=>'my_tab_id']) ?>
 
   </div>
-  <div class="table-responsive mt-3">
-    <?php Pjax::begin(['id'=>'id-pjax']) ?>
-    <?= DetailView::widget([
+
+  <?php Pjax::begin(['id' => 'id-pjax']) ?>
+  <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'nis',
@@ -28,8 +32,7 @@ CrudAsset::register($this);
             'alamat:ntext',
         ],
     ]) ?>
-    <?php Pjax::end() ?>
-  </div>
+  <?php Pjax::end() ?>
 
 </div>
 
@@ -38,3 +41,8 @@ CrudAsset::register($this);
     "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>
+
+
+<?php 
+
+?>

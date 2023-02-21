@@ -147,10 +147,10 @@ class BiodataController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel();       
+        $model = $this->findModel($id);       
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -176,16 +176,17 @@ class BiodataController extends Controller
                     // 'footer'=> Html::button('Tutup', ['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                     //         Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
-            }else{
-                 return [
-                    'title'=> "Ubah Siswa ",
-                    'content'=>$this->renderAjax('update', [
-                        'model' => $model,
-                    ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
-                ];        
             }
+            // else{
+            //      return [
+            //         'title'=> "Ubah Siswa ",
+            //         'content'=>$this->renderAjax('update', [
+            //             'model' => $model,
+            //         ]),
+            //         'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+            //                     Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+            //     ];        
+            // }
         }else{
             /*
             *   Process for non-ajax request
