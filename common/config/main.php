@@ -42,4 +42,7 @@ return [
             'class' => '\kartik\grid\Module'
         ],
     ],
+    'params' => [
+        'icon-framework' => \kartik\icons\Icon::FAS,
+    ]
 ];

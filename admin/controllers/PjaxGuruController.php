@@ -45,6 +45,10 @@ class PjaxGuruController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save())
         {
             $model = new Guru(); //reset model
+            return [
+                'forceClose'=>true,
+                'forceReload'=>'#guru',
+            ];
         }
 
         $searchModel = new PjaxGuruSearch();

@@ -90,7 +90,7 @@ a.desc:after {
   outline: none;
 }
 
-.glyphicon {
+/* .glyphicon {
   font-family: "FontAwesome";
   font-weight: 900;
 }
@@ -105,4 +105,4 @@ a.desc:after {
 
 .glyphicon-eye-open::before {
   content: "\f06e";
-}
+} */
