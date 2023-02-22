@@ -50,6 +50,7 @@ return [
     'as access' => [
         'class' => '\hscstudio\mimin\components\AccessControl',
         'allowActions' => [
+            '*',
             'gii/*',
             'site/*',
             'debug/*',

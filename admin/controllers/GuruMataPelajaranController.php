@@ -40,7 +40,7 @@ class GuruMataPelajaranController extends Controller
      * Lists all MataPelajaran models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {    
         $searchModel = new GuruMataPelajaranSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
