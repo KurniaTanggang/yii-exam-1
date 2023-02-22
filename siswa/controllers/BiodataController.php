@@ -168,11 +168,10 @@ class BiodataController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceClose'=>true,
+                    // 'forceClose'=>true,
                     'forceReload'=>'#id-pjax',
-                    // 'title'=> "Siswa ",
-                    // 'content'=>'<span class="text-success">Ubah Biodata Siswa berhasil</span>',
-
+                    'title'=> "Ubah Biodata ",
+                    'content'=>'<span class="text-success">Ubah Biodata Siswa berhasil</span>',
                     // 'footer'=> Html::button('Tutup', ['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                     //         Html::a('Ubah',['update', 'id' => $model->id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
