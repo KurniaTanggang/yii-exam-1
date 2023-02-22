@@ -115,7 +115,7 @@ class PjaxGuruController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
+                    'forceReload'=>'#guru',
                     'title'=> "Tambah Guru",
                     'content'=>'<span class="text-success">Create Guru berhasil</span>',
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
@@ -176,7 +176,7 @@ class PjaxGuruController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'forceReload'=>'#crud-datatable-pjax',
+                    'forceReload'=>'#guru',
                     'title'=> "Guru ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
@@ -225,7 +225,7 @@ class PjaxGuruController extends Controller
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            return ['forceClose'=>true,'forceReload'=>'#guru'];
         }else{
             /*
             *   Process for non-ajax request
@@ -257,7 +257,7 @@ class PjaxGuruController extends Controller
             *   Process for ajax request
             */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose'=>true,'forceReload'=>'#crud-datatable-pjax'];
+            return ['forceClose'=>true,'forceReload'=>'#guru'];
         }else{
             /*
             *   Process for non-ajax request

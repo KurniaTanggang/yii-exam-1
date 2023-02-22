@@ -16,6 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
+$this->registerJs(' 
+$.pjax.defaults.timeout = false;      
+');
 ?>
 <!-- <div class="element-wrapper">
     <h6 class="element-header">
@@ -89,7 +92,6 @@ CrudAsset::register($this);
   <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 
   <?php Pjax::begin(['id' => 'guru']) ?>
   <?= GridView::widget([
