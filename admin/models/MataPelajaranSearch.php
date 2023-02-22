@@ -18,8 +18,9 @@ class MataPelajaranSearch extends MataPelajaran
     public function rules()
     {
         return [
-            [['id', 'id_tingkat_kelas', 'id_jurusan'], 'integer'],
-            [['mata_pelajaran'], 'safe'],
+            // [['id', 'id_tingkat_kelas', 'id_jurusan'], 'integer'],
+            [['id'], 'integer'],
+            [['mata_pelajaran', 'id_tingkat_kelas', 'id_jurusan'], 'safe'],
         ];
     }
 
@@ -41,7 +42,7 @@ class MataPelajaranSearch extends MataPelajaran
      */
     public function search($params)
     {
-        $query = MataPelajaran::find();
+        $query = MataPelajaran::find()->joinWith('refJurusan')->joinWith('refTingkatKelas');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,11 +58,13 @@ class MataPelajaranSearch extends MataPelajaran
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_tingkat_kelas' => $this->id_tingkat_kelas,
-            'id_jurusan' => $this->id_jurusan,
+            // 'id_tingkat_kelas' => $this->id_tingkat_kelas,
+            // 'id_jurusan' => $this->id_jurusan,
         ]);
 
-        $query->andFilterWhere(['like', 'mata_pelajaran', $this->mata_pelajaran]);
+        $query->andFilterWhere(['like', 'mata_pelajaran', $this->mata_pelajaran])
+              ->andFilterWhere(['like', 'tingkat_kelas', $this->id_tingkat_kelas])
+              ->andFilterWhere(['like', 'jurusan', $this->id_jurusan]);
 
         return $dataProvider;
     }
