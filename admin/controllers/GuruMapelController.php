@@ -5,6 +5,8 @@ namespace admin\controllers;
 use Yii;
 use common\models\GuruMataPelajaran;
 use admin\models\GuruMapelSearch;
+use admin\models\GuruSearch;
+use common\models\Guru;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -94,6 +96,18 @@ class GuruMapelController extends Controller
         $model = new GuruMataPelajaran();  
         $model->id_mata_pelajaran = $id_mapel;
 
+        // $guru = Guru::find()->asArray()->all();
+
+        $guru_mapel = GuruMataPelajaran::find()->where(['id_mata_pelajaran' => $id_mapel])->asArray()->all();
+        $guru_mapel = array_column($guru_mapel, 'id_guru');
+        // var_dump($guru_mapel);die;
+        $guru = Guru::find()->where(['NOT', ['id' => $guru_mapel]])->asArray()->all();
+        // $guru = Guru::find()->joinWith('guruMapel')->where(['not', ['id_mata_pelajaran'=> $id_mapel]])->asArray()->all();
+        
+        $guru_nama = array_column($guru, 'nama_guru');
+        $guru_id = array_column($guru, 'id');
+        // var_dump($guru_id);die;
+
         if($request->isAjax){
             /*
             *   Process for ajax request
@@ -104,9 +118,10 @@ class GuruMapelController extends Controller
                     'title'=> "Tambah GuruMataPelajaran",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'guru_nama' => $guru_nama,
+                        'guru_id' => $guru_id,
                     ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-warning float-left','data-dismiss'=>"modal"])
         
                 ];         
             }else if($model->load($request->post()) && $model->save()){
@@ -114,8 +129,7 @@ class GuruMapelController extends Controller
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> "Tambah GuruMataPelajaran",
                     'content'=>'<span class="text-success">Create GuruMataPelajaran berhasil</span>',
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-warning float-left','data-dismiss'=>"modal"])
         
                 ];         
             }else{           
@@ -123,10 +137,10 @@ class GuruMapelController extends Controller
                     'title'=> "Tambah GuruMataPelajaran",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
+                        'guru_nama' => $guru_nama,
+                        'guru_id' => $guru_id,
                     ]),
-                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
-        
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-warning float-left','data-dismiss'=>"modal"])
                 ];         
             }
         }else{
@@ -138,12 +152,119 @@ class GuruMapelController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'guru_nama' => $guru_nama,
+                    'guru_id' => $guru_id,
                 ]);
             }
         }
        
     }
 
+    public function actionPilihGuru($id_guru, $id_mapel)
+    {
+        $request = Yii::$app->request;
+
+        // $searchModel = new GuruSearch();
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $model = new GuruMataPelajaran(); 
+        $model->id_mata_pelajaran = $id_mapel;
+
+        //$guru = Guru::find()->asArray()->all();
+        $guru_mapel = GuruMataPelajaran::find()->where(['id_mata_pelajaran' => $id_mapel])->asArray()->all();
+        $guru_mapel = array_column($guru_mapel, 'id_guru');
+        // var_dump($guru_mapel);die;
+        $guru = Guru::find()->where(['NOT', ['id' => $guru_mapel]])->asArray()->all();
+        
+        
+        $guru_nama = array_column($guru, 'nama_guru');
+        $guru_id = array_column($guru, 'id');
+        // $model->id_guru = $id_guru; 
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->id_guru = $id_guru; 
+            $model->id_mata_pelajaran = $id_mapel;
+            $model->save();
+            return [
+                'title'=> "Tambah GuruMataPelajaran",
+                'forceReload'=>'#crud-datatable-pjax',
+                'content' => $this->renderAjax('_form', [
+                    'model' => $model,
+                    'guru_nama' => $guru_nama,
+                    'guru_id' => $guru_id,
+                ]),
+                'footer'=> Html::button('Tutup',['class'=>'btn btn-warning float-left','data-dismiss'=>"modal"])
+            ];
+        }
+       
+    }
+
+    public function actionpPilihGuru($id_guru, $id_mapel)
+    {
+        $request = Yii::$app->request;
+        $modelGuruMataPelajaran = new GuruMataPelajaran(); 
+        $model = $this->findModel($id_guru, $id_mapel); 
+
+        $guru = ArrayHelper::map(Guru::find()->all(), 'id', 'nama_guru');
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Pilih Guru",
+                    'content'=>$this->renderAjax('_form_pilih_guru', [
+                        'modelGuruMataPelajaran' => $modelGuruMataPelajaran,
+                        'guru' => $guru,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }else if($modelGuruMataPelajaran->load($request->post())){
+                $modelGuruMataPelajaran->id_mata_pelajaran = $model->id;
+                $modelGuruMataPelajaran->save();
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> "Pilih Guru",
+                    'content'=>'<span class="text-success">Pilih Guru Mata Pelajaran berhasil</span>',
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                            Html::a('Tambah Lagi',['pilih-guru'],['class'=>'btn btn-primary','role'=>'modal-remote'])
+        
+                ];         
+            }else{           
+                return [
+                    'title'=> "Pilih Guru Mata Pelajaran",
+                    'content'=>$this->renderAjax('_form_pilih_guru', [
+                        'modelGuruMataPelajaran' => $modelGuruMataPelajaran,
+                        'guru' => $guru,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
+                                Html::button('Simpan',['class'=>'btn btn-primary','type'=>"submit"])
+        
+                ];         
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($modelGuruMataPelajaran->load($request->post())) {
+                $modelGuruMataPelajaran->id_mata_pelajaran = $model->id;
+                return $this->redirect(['view', 'id' => $modelGuruMataPelajaran->id]);
+            } else {
+                return $this->render('_form_pilih_guru', [
+                    'modelGuruMataPelajaran' => $modelGuruMataPelajaran,
+                    'guru' => $guru,
+                ]);
+            }
+        }
+       
+    }
     /**
      * Updates an existing GuruMataPelajaran model.
      * For ajax request will return json object

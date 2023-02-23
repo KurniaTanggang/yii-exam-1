@@ -49,4 +49,9 @@ class Guru extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
+
+    public function getGuruMapel()
+    {
+        return $this->hasOne(GuruMataPelajaran::className(), ['id_guru' => 'id']);
+    }
 }

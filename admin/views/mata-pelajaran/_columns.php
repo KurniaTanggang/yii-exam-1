@@ -43,9 +43,11 @@ return [
             "btn_aksi" => function ($url, $model, $key) {
                 return Html::a('Daftar Guru', ['guru-mapel/index', 'id_mapel' => $model->id], [
                     'class' => 'btn btn-primary btn-block',
-                    'role' => 'modal-remote',
+                    // 'role' => 'modal-remote',
                     'title' => 'Lihat',
-                    'data-toggle' => 'tooltip'
+                    'data-toggle' => 'tooltip',
+                    'data-pjax' =>0,
+                    'target'=>'_blank',
                 ]);
 
             },

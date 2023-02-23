@@ -58,7 +58,7 @@ CrudAsset::register($this);
             'before'=>Html::a('Tambah', ['create', 'id_mapel'=>$id_mapel],
             ['role'=>'modal-remote','title'=> 'Create new
             Guru Mata Pelajarans','class'=>'btn
-            btn-default']),
+            btn-primary']),
             // 'after'=>BulkButtonWidget::widget([
             // 'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
             // ["bulk-delete"] ,

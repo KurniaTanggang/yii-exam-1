@@ -10,14 +10,16 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_guru',
-    ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_mata_pelajaran',
+        'class' => '\kartik\grid\DataColumn',
+        'label' => 'Guru Mata Pelajaran',
+        'attribute' => 'id_guru',
+        'value' => 'namaGuru.nama_guru'
     ],
+    // [
+    //     'class'=>'\kartik\grid\DataColumn',
+    //     'attribute'=>'id_mata_pelajaran',
+    // ],
     [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,

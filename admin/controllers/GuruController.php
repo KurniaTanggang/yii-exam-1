@@ -51,6 +51,37 @@ class GuruController extends Controller
         ]);
     }
 
+    public function actionIndex2($id_mapel)
+    {    
+        $searchModel = new GuruSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+$id = $id_mapel;
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
+
+        $request = Yii::$app->request;
+        if ($request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                    'title'=> "Pilih Guru Mata Pelajaran ",
+                    'content'=>$this->renderAjax('index2', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                        'id' => $id,
+                    ]),
+                    'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"])
+                ];    
+        }else{
+            return $this->render('index2', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'id' => $id,
+            ]);
+        }
+    }
+
 
     /**
      * Displays a single Guru model.

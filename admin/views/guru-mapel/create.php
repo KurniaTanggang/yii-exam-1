@@ -8,7 +8,11 @@ use yii\helpers\Html;
 
 ?>
 <div class="guru-mata-pelajaran-create">
-    <?= $this->render('_form', [
+  <?= $this->render('_form', [
+        // 'searchModel' => $searchModel,
+        // 'dataProvider' => $dataProvider,
         'model' => $model,
+        'guru_nama' => $guru_nama,
+        'guru_id' => $guru_id,
     ]) ?>
 </div>
