@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 $this->registerJs(' 
-$.pjax.defaults.timeout = false;      
+$.pjax.defaults.timeout = false;     
 ');
 ?>
 <!-- <div class="element-wrapper">
