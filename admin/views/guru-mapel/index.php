@@ -41,12 +41,12 @@ CrudAsset::register($this);
             'pjax'=>true,
             'columns' => require(__DIR__.'/_columns.php'),
             'toolbar'=> [
-            ['content'=>
-            Html::a('<i class="fas fa-redo"></i> ', [''],
-            ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
-            '{toggleData}'
-            // .'{export}'
-            ],
+            // ['content'=>
+            // Html::a('<i class="fas fa-redo"></i> ', [''],
+            // ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
+            // '{toggleData}'
+            // // .'{export}'
+            // ],
             ],
             'striped' => true,
             'condensed' => true,

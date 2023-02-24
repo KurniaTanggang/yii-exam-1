@@ -54,4 +54,10 @@ class Guru extends \yii\db\ActiveRecord
     {
         return $this->hasOne(GuruMataPelajaran::className(), ['id_guru' => 'id']);
     }
+
+    public function cekStatusMapel($id_mapel)
+    {
+        return $this->hasOne(GuruMataPelajaran::className(), ['id_guru' => 'id'])->andOnCondition(['id_mata_pelajaran' => $id_mapel])->exists();
+    }
+
 }

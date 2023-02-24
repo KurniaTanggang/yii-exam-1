@@ -55,7 +55,7 @@ class GuruController extends Controller
     {    
         $searchModel = new GuruSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-$id = $id_mapel;
+        $id = $id_mapel;
         // return $this->render('index', [
         //     'searchModel' => $searchModel,
         //     'dataProvider' => $dataProvider,

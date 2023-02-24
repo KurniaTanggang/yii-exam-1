@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 return [
     //[
@@ -22,6 +23,7 @@ return [
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',
+        'template' => '{delete}',
         'dropdown' => false,
         'vAlign'=>'middle',
         'urlCreator' => function($action, $model, $key, $index) { 
@@ -36,5 +38,4 @@ return [
                           'data-confirm-title'=>'Peringatan',
                           'data-confirm-message'=>'Apakah anda yakin ingin menghapus data ini?'], 
     ],
-
 ];   
