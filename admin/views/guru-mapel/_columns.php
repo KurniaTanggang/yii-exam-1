@@ -14,7 +14,7 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Guru Mata Pelajaran',
-        'attribute' => 'id_guru',
+        'attribute' => 'cari_guru',
         'value' => 'namaGuru.nama_guru'
     ],
     // [

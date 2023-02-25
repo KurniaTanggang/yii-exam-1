@@ -53,6 +53,7 @@ CrudAsset::register($this);
                                 'buttons' => [
                                     "btn_aksi" => function ($url, $model, $key) use ($id_mapel) {
                                       if($model->cekStatusMapel($id_mapel)){
+                                        
                                         return Html::a('Terpilih', ['pilih-guru', 'id_guru' => $model->id, 'id_mapel'=>$id_mapel], [
                                           'class' => 'btn btn-info btn-block',
                                           'role' => 'modal-remote',
@@ -67,6 +68,40 @@ CrudAsset::register($this);
                                             'data-toggle' => 'tooltip'
                                         ]);
                                       }
+                                      // if (!Yii::$app->request->isAjax){
+                                      //   if($model->cekStatusMapel($id_mapel)){
+                                      //     return Html::a('Terpilih', ['pilih-guru', 'id_guru' => $model->id, 'id_mapel'=>$id_mapel], [
+                                      //       'class' => 'btn btn-info btn-block',
+                                      //       'title' => 'Lihat',
+                                      //       // 'role' => 'modal-remote',
+                                      //       'data-toggle' => 'tooltip'
+                                      //   ]);
+                                      //   }else{
+                                      //     return Html::a('Pilih Guru', ['pilih-guru', 'id_guru' => $model->id, 'id_mapel'=>$id_mapel], [
+                                      //         'class' => 'btn btn-success btn-block',
+                                      //         'title' => 'Lihat',
+                                      //         // 'role' => 'modal-remote',
+                                      //         'data-toggle' => 'tooltip'
+                                      //     ]);
+                                      //   }
+                                      // }else{
+                                      //   if($model->cekStatusMapel($id_mapel)){
+                                      //     return Html::a('Terpilih', ['pilih-guru', 'id_guru' => $model->id, 'id_mapel'=>$id_mapel], [
+                                      //       'class' => 'btn btn-info btn-block',
+                                      //       'role' => 'modal-remote',
+                                      //       'title' => 'Lihat',
+                                      //       'data-toggle' => 'tooltip'
+                                      //   ]);
+                                      //   }else{
+                                      //     return Html::a('Pilih Guru', ['pilih-guru', 'id_guru' => $model->id, 'id_mapel'=>$id_mapel], [
+                                      //         'class' => 'btn btn-success btn-block',
+                                      //         'role' => 'modal-remote',
+                                      //         'title' => 'Lihat',
+                                      //         'data-toggle' => 'tooltip'
+                                      //     ]);
+                                      //   }
+                                      // }
+                        
                                     },
                         
                                 ]
