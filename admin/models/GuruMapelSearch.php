@@ -18,7 +18,8 @@ class GuruMapelSearch extends GuruMataPelajaran
     public function rules()
     {
         return [
-            [['id_guru', 'id_mata_pelajaran'], 'integer'],
+            // [['id_guru', 'id_mata_pelajaran'], 'integer'],
+            [['id_guru', 'id_mata_pelajaran'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class GuruMapelSearch extends GuruMataPelajaran
      */
     public function search($params)
     {
-        $query = GuruMataPelajaran::find();
+        $query = GuruMataPelajaran::find()->joinWith('namaGuru')->joinWith('mataPelajaran');;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,10 +55,13 @@ class GuruMapelSearch extends GuruMataPelajaran
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id_guru' => $this->id_guru,
-            'id_mata_pelajaran' => $this->id_mata_pelajaran,
-        ]);
+        // $query->andFilterWhere([
+        //     'id_guru' => $this->id_guru,
+        //     'id_mata_pelajaran' => $this->id_mata_pelajaran,
+        // ]);
+
+        $query->andFilterWhere(['like', 'nama_guru', $this->id_guru])
+              ->andFilterWhere(['like', 'mata_pelajaran', $this->id_mata_pelajaran]);
 
         return $dataProvider;
     }
