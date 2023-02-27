@@ -14,6 +14,8 @@ class CreateNewAkun extends Model
     public $username;
     public $email;
     public $password;
+    public $password_repeat;
+    public $verifyCode;
 
 
     /**
@@ -35,6 +37,9 @@ class CreateNewAkun extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+            ['password_repeat', 'required'],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
         ];
     }
 

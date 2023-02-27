@@ -19,6 +19,7 @@ use kartik\select2\Select2;
 
   <?= $form->field($model_akun, 'password')->passWordInput(['maxlength' => true]) ?>
 
+  <?= $form->field($model_akun, 'password_repeat')->passWordInput(['maxlength' => true]) ?>
 
   <?php if (!Yii::$app->request->isAjax){ ?>
   <div class="form-group">
