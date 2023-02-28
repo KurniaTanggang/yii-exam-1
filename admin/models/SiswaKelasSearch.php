@@ -12,6 +12,11 @@ use common\models\Kelas;
  */
 class SiswaKelasSearch extends Kelas
 {
+    public $tahun_ajaran;
+    public $tingkat_kelas;
+    public $jurusan;
+    public $nama_guru;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +24,7 @@ class SiswaKelasSearch extends Kelas
     {
         return [
             [['id', 'id_tahun_ajaran', 'id_tingkat', 'id_wali_kelas', 'id_jurusan'], 'integer'],
-            [['nama_kelas'], 'safe'],
+            [['nama_kelas', 'tahun_ajaran', 'tingkat_kelas', 'jurusan', 'nama_guru'], 'safe'],
         ];
     }
 
@@ -41,7 +46,10 @@ class SiswaKelasSearch extends Kelas
      */
     public function search($params)
     {
-        $query = Kelas::find();
+        $query = Kelas::find()->joinWith('refTahunAjaran')
+                              ->joinWith('refTingkatKelas')
+                              ->joinWith('refJurusan')
+                              ->joinWith('namaGuru');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -63,7 +71,12 @@ class SiswaKelasSearch extends Kelas
             'id_jurusan' => $this->id_jurusan,
         ]);
 
-        $query->andFilterWhere(['like', 'nama_kelas', $this->nama_kelas]);
+        $query->andFilterWhere(['like', 'LOWER(nama_kelas)', strtolower($this->nama_kelas)])
+              ->andFilterWhere(['like', 'tahun_ajaran', $this->tahun_ajaran])
+              ->andFilterWhere(['like', 'LOWER(tingkat_kelas)', strtolower($this->tingkat_kelas)])
+              ->andFilterWhere(['like', 'LOWER(jurusan)', strtolower($this->jurusan)])
+              ->andFilterWhere(['like', 'LOWER(nama_guru)', strtolower($this->nama_guru)]);
+
 
         return $dataProvider;
     }

@@ -17,37 +17,37 @@ return [
     // ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Tahun Ajaran',
-        'attribute' => 'id_tahun_ajaran',
+        'label' => 'Tahun Ajaran',
+        'attribute' => 'tahun_ajaran',
         'value' => function ($model) {
             return $model->refTahunAjaran->tahun_ajaran;
         }
     ],
     [
-        'header' => 'Nama Kelas',
+        'label' => 'Nama Kelas',
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'nama_kelas',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Tingkat Kelas',
-        'attribute' => 'id_tingkat',
+        'label' => 'Tingkat Kelas',
+        'attribute' => 'tingkat_kelas',
         'value' => function ($model) {
             return $model->refTingkatKelas->tingkat_kelas;
         }
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Jurusan',
-        'attribute' => 'id_jurusan',
+        'label' => 'Jurusan',
+        'attribute' => 'jurusan',
         'value' => function ($model) {
             return $model->refJurusan->jurusan;
         }
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Wali Kelas',
-        'attribute' => 'id_wali_kelas',
+        'label' => 'Wali Kelas',
+        'attribute' => 'nama_guru',
         'value' => function ($model) {
             return $model->namaGuru->nama_guru;
         }
