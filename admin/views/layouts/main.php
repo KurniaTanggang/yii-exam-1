@@ -43,10 +43,10 @@ AppAsset::register($this);
             ['label' => 'Siswa', 'url' => ['/siswa/index']],
             ['label' => 'Guru', 'url' => ['/guru/index']],
             ['label' => 'Daftar Mata Pelajaran', 'url' => ['/mata-pelajaran/index']],
-            ['label' => 'Guru Mata Pelajaran', 'url' => ['/guru-mata-pelajaran/index']],
+            // ['label' => 'Guru Mata Pelajaran', 'url' => ['/guru-mata-pelajaran/index']],
             ['label' => 'Daftar Kelas', 'url' => ['/kelas/index']],
             ['label' => 'Siswa Kelas', 'url' => ['/siswa-kelas/index']],
-            ['label' => 'PJAX Guru', 'url' => ['/pjax-guru/index']],
+            // ['label' => 'PJAX Guru', 'url' => ['/pjax-guru/index']],
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
