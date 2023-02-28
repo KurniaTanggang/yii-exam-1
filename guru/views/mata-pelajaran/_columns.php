@@ -21,18 +21,14 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Tingkat Kelas',
-        'attribute' => 'id_tingkat_kelas',
-        'value' => function ($model) {
-            return $model->refTingkatKelas->tingkat_kelas;
-        }
+        'attribute' => 'cari_kelas',
+        'value' => 'refTingkatKelas.tingkat_kelas'
     ],
     [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Jurusan',
-        'attribute' => 'id_jurusan',
-        'value' => function ($model) {
-            return $model->refJurusan->jurusan;
-        }
+        'attribute' => 'cari_jurusan',
+        'value' => 'refJurusan.jurusan'
     ],
 
 ];   

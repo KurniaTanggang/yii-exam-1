@@ -14,6 +14,8 @@ use common\models\Wali;
  */
 class WaliSearch extends Wali
 {
+    public $status_wali;
+
     /**
      * @inheritdoc
      */
@@ -21,7 +23,7 @@ class WaliSearch extends Wali
     {
         return [
             [['id', 'id_status_wali'], 'integer'],
-            [['nama', 'alamat', 'no_hp'], 'safe'],
+            [['nama', 'alamat', 'no_hp', 'status_wali'], 'safe'],
         ];
     }
 
@@ -43,18 +45,17 @@ class WaliSearch extends Wali
      */
     public function search($params)
     {
-        // $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
-        // $waliSiswa = SiswaWali::find()->where(['id_siswa' => $siswa->id])->one();
-        // if($waliSiswa)
-        //     $query = Wali::find()->where(['id' => $waliSiswa->id_wali ]);
-        // else
-        //     return array();
-        $query = Wali::find();
-
+        $query = Wali::find()->joinWith('statusWali');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['nama', 'alamat', 'no_hp', 'status_wali']],
         ]);
+
+        // $dataProvider->sort->attributes['cari_status_wali'] = [
+        //     'asc' => ['ref_status_wali.status_wali' => SORT_ASC],
+        //     'desc' => ['ref_status_wali.status_wali' => SORT_DESC],
+        //     ];
 
         $this->load($params);
 
@@ -65,13 +66,14 @@ class WaliSearch extends Wali
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'wali.id' => $this->id,
             'id_status_wali' => $this->id_status_wali,
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
             ->andFilterWhere(['like', 'alamat', $this->alamat])
-            ->andFilterWhere(['like', 'no_hp', $this->no_hp]);
+            ->andFilterWhere(['like', 'no_hp', $this->no_hp])
+            ->andFilterWhere(['like', 'LOWER(status_wali)', strtoLower($this->status_wali)]);
 
         return $dataProvider;
     }

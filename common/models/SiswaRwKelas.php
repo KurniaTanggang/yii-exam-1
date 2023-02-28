@@ -57,4 +57,14 @@ class SiswaRwKelas extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Siswa::className(), ['id' => 'id_siswa']);
     }
+
+    public function getRefTahunAjaran()
+    {
+        return $this->hasOne(RefTahunAjaran::className(), ['id' => 'id_tahun_ajaran']);
+    }
+
+    public function getKelas()
+    {
+        return $this->hasOne(Kelas::className(), ['id' => 'id_kelas']);
+    }
 }

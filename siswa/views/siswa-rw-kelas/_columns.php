@@ -20,11 +20,12 @@ return [
     // ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Tahun Ajaran',
-        'attribute' => 'id_tahun_ajaran',
-        'value' => function ($model) {
-            return $model->siswa->kelas->refTahunAjaran->tahun_ajaran;
-        }
+        'label' => 'Tahun Ajaran',
+        'attribute' => 'tahun_ajaran',
+        'value' => 'refTahunAjaran.tahun_ajaran'
+        // 'value' => function ($model) {
+        //     return $model->siswa->kelas->refTahunAjaran->tahun_ajaran;
+        // }
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -32,19 +33,15 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Tingkat Kelas',
-        'attribute' => 'id_tingkat',
-        'value' => function ($model) {
-            return $model->siswa->kelas->refTingkatKelas->tingkat_kelas;
-        }
+        'label' => 'Tingkat Kelas',
+        'attribute' => 'tingkat_kelas',
+        'value' => 'kelas.refTingkatKelas.tingkat_kelas'
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Wali Kelas',
-        'attribute' => 'id_wali_kelas',
-        'value' => function ($model) {
-            return $model->siswa->kelas->namaGuru->nama_guru;
-        }
+        'label' => 'Wali Kelas',
+        'attribute' => 'nama_guru',
+        'value' => 'kelas.namaGuru.nama_guru'
     ],
 
 ];   

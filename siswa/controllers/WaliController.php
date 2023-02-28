@@ -50,16 +50,12 @@ class WaliController extends Controller
         $waliSiswa = SiswaWali::find()->where(['id_siswa' => $siswa->id])->asArray()->all();
         $waliSiswa = array_column($waliSiswa, 'id_wali');
         
-        // $dump_waliSiswa = ArrayHelper::map(SiswaWali::find()->all(), 'id', 'id_wali');
-        // var_dump($waliSiswa);
-        // var_dump($dump_waliSiswa);
-        // die;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
         if($waliSiswa)
-            $dataProvider->query->andFilterWhere(['id' => $waliSiswa]);
+            $dataProvider->query->andFilterWhere(['wali.id' => $waliSiswa]);
         else
-            $dataProvider->query->andFilterWhere(['id' => '0']);
+            $dataProvider->query->andFilterWhere(['wali.id' => '0']);
             
 
         return $this->render('index', [

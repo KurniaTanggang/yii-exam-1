@@ -44,7 +44,7 @@ class GuruMapelSearch extends GuruMataPelajaran
     public function search($params)
     {
         $query = GuruMataPelajaran::find()->joinWith('namaGuru');
-
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -63,7 +63,7 @@ class GuruMapelSearch extends GuruMataPelajaran
             // 'cari_guru' => $this->id_guru,
         ]);
 
-        $query->andFilterWhere(['like', 'nama_guru', $this->cari_guru]);
+        $query->andFilterWhere(['like', 'LOWER(nama_guru)', strtolower($this->cari_guru)]);
 
         return $dataProvider;
     }

@@ -113,7 +113,6 @@ class GuruMapelController extends Controller
                         'id_mapel' => $id_mapel,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-warning float-left','data-dismiss'=>"modal"])
-        
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
@@ -182,10 +181,10 @@ class GuruMapelController extends Controller
             ];
         }
         else{
-            return [
-                'forceReload'=>'#crud-datatable-pjax',
-            ];
-            // return $this->redirect(['index']);
+            // return [
+            //     // 'forceReload'=>'#crud-datatable-pjax',
+            // ];
+            return $this->redirect(['index2']);
         }
        
     }

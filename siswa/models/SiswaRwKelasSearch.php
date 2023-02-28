@@ -13,6 +13,10 @@ use common\models\Siswa;
  */
 class SiswaRwKelasSearch extends SiswaRwKelas
 {
+    public $tahun_ajaran;
+    public $tingkat_kelas;
+    public $nama_guru;
+
     /**
      * @inheritdoc
      */
@@ -20,7 +24,7 @@ class SiswaRwKelasSearch extends SiswaRwKelas
     {
         return [
             [['id', 'id_siswa', 'id_kelas', 'id_tahun_ajaran', 'id_tingkat', 'id_wali_kelas'], 'integer'],
-            [['nama_kelas'], 'safe'],
+            [['nama_kelas', 'tahun_ajaran', 'tingkat_kelas', 'nama_guru'], 'safe'],
         ];
     }
 
@@ -45,8 +49,13 @@ class SiswaRwKelasSearch extends SiswaRwKelas
         $siswa = Siswa::find()->where(['id_user' => Yii::$app->user->id])->one();
         $query = SiswaRwKelas::find()->where(['id_siswa' => $siswa->id]);
 
+        $query->joinWith('refTahunAjaran')
+              ->joinWith('kelas.refTingkatKelas')
+              ->joinWith('kelas.namaGuru');
+              
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['tahun_ajaran', 'nama_kelas', 'tingkat_kelas', 'nama_guru']],
         ]);
 
         $this->load($params);
@@ -61,12 +70,15 @@ class SiswaRwKelasSearch extends SiswaRwKelas
             'id' => $this->id,
             'id_siswa' => $this->id_siswa,
             'id_kelas' => $this->id_kelas,
-            'id_tahun_ajaran' => $this->id_tahun_ajaran,
-            'id_tingkat' => $this->id_tingkat,
-            'id_wali_kelas' => $this->id_wali_kelas,
+            // 'id_tahun_ajaran' => $this->id_tahun_ajaran,
+            // 'id_tingkat' => $this->id_tingkat,
+            // 'id_wali_kelas' => $this->id_wali_kelas,
         ]);
 
-        $query->andFilterWhere(['like', 'nama_kelas', $this->nama_kelas]);
+        $query->andFilterWhere(['like', 'LOWER(siswa_rw_kelas.nama_kelas)', strtolower($this->nama_kelas)])
+              ->andFilterWhere(['like', 'tahun_ajaran', $this->tahun_ajaran])
+              ->andFilterWhere(['like', 'LOWER(tingkat_kelas)', strtolower($this->tingkat_kelas)])
+              ->andFilterWhere(['like', 'LOWER(nama_guru)', strtolower($this->nama_guru)]);
 
         return $dataProvider;
     }
