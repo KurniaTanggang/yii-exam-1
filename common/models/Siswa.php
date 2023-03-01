@@ -36,7 +36,10 @@ class Siswa extends \yii\db\ActiveRecord
             [['alamat'], 'string'],
             [['id_kelas', 'id_user'], 'default', 'value' => null],
             [['id_kelas', 'id_user'], 'integer'],
+
             [['nis'], 'string', 'max' => 10],
+            ['nis', 'unique', 'targetClass' => '\common\models\Siswa', 'message' => 'This NIS has already been taken.'],
+
             [['nama', 'tempat_lahir'], 'string', 'max' => 255],
         ];
     }
