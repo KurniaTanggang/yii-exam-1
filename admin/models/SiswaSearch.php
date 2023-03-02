@@ -12,6 +12,7 @@ use common\models\Siswa;
  */
 class SiswaSearch extends Siswa
 {
+    public $nama_kelas;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class SiswaSearch extends Siswa
     {
         return [
             [['id', 'id_kelas', 'id_user'], 'integer'],
-            [['nis', 'nama', 'tempat_lahir', 'tanggal_lahir', 'alamat'], 'safe'],
+            [['nis', 'nama', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'nama_kelas'], 'safe'],
         ];
     }
 
@@ -41,10 +42,11 @@ class SiswaSearch extends Siswa
      */
     public function search($params)
     {
-        $query = Siswa::find();
+        $query = Siswa::find()->joinWith('kelas');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['nis', 'nama', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'nama_kelas']]
         ]);
 
         $this->load($params);
@@ -58,14 +60,15 @@ class SiswaSearch extends Siswa
         $query->andFilterWhere([
             'id' => $this->id,
             'tanggal_lahir' => $this->tanggal_lahir,
-            'id_kelas' => $this->id_kelas,
+            // 'id_kelas' => $this->id_kelas,
             'id_user' => $this->id_user,
         ]);
 
         $query->andFilterWhere(['like', 'nis', $this->nis])
-            ->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'tempat_lahir', $this->tempat_lahir])
-            ->andFilterWhere(['like', 'alamat', $this->alamat]);
+            ->andFilterWhere(['like', 'LOWER(nama)', strtolower($this->nama)])
+            ->andFilterWhere(['like', 'LOWER(tempat_lahir)', strtolower($this->tempat_lahir)])
+            ->andFilterWhere(['like', 'LOWER(alamat)', strtolower($this->alamat)])
+            ->andFilterWhere(['like', 'LOWER(nama_kelas)', strtolower($this->nama_kelas)]);
 
         return $dataProvider;
     }

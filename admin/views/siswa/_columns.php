@@ -37,11 +37,12 @@ return [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'header' => 'Kelas',
-        'attribute' => 'id_kelas',
-        'value' => function ($model) {
-            return $model->kelas->nama_kelas??"NOT SET";
-        }
+        'label' => 'Kelas',
+        'attribute' => 'nama_kelas',
+        'value' => 'kelas.nama_kelas'
+        // 'value' => function ($model) {
+        //     return $model->kelas->nama_kelas??"NOT SET";
+        // }
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
