@@ -13,7 +13,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
-        
+
         'request' => [
             'csrfParam' => '_csrf-siswa',
             'class' => 'common\components\Request',
@@ -51,6 +51,7 @@ return [
     'as access' => [
         'class' => '\hscstudio\mimin\components\AccessControl',
         'allowActions' => [
+            '*',
             'gii/*',
             'site/*',
             'debug/*',
