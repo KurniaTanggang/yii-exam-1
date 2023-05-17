@@ -13,7 +13,7 @@ class m230213_020503_add_role_riwayat_and_wali extends Migration
     public function safeUp()
     {
         $this->batchInsert(
-            'auth_itemm',
+            'auth_item',
             [
                 'name',
                 'type',
