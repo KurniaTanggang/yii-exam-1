@@ -26,6 +26,8 @@ class m230213_020503_add_role_riwayat_and_wali extends Migration
             [
                 [
                     '/siswa-rw-kelas/*', 2, NULL, NULL, NULL, time(), time()
+                ],[
+                    '/wali/*', 2, NULL, NULL, NULL, time(), time()
                 ],
             ]
         );
